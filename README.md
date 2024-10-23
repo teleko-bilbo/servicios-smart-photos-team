@@ -1,4 +1,4 @@
-# Nombre del proyecto de grupo
+# Smart Photos Team
 
 ## Participantes
 
