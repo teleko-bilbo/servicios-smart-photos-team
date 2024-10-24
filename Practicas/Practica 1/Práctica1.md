@@ -1,8 +1,33 @@
 # Análisis de Cuellos de Botella y Pruebas de Carga
 
 ## 1. Identificación de Cuellos de Botella
-- Reflexionar sobre los principales cuellos de botella en el sistema.
-- Analizar la complejidad de los procesos de forma teórica.
+
+### Reflexionar sobre los principales cuellos de botella en el sistema.
+Los principales cuellos de botella relacionados a la utilización del servicio "Smart Photos" son los siguientes:
+
+  #### CPU, GPU, RAM, bateria/corriente. 
+      El consumo de CPU, GPU, RAM y bateria y/o potencia de corriente puede ser un cuello de botella en caso de que haya varios
+      usuarios demandando servicios de conversion de calidad/formato para sus videos.
+
+      CPU: transcodificar imagenes / video requiere una alta capacidad de procesamiento ya que es necesario decodificar, procesar
+      y recodificar en un nuevo formato.
+
+      GPU: para acelerar el proceso de transcodificación de videos, a veces se utiliza GPU. Esto, tiene su impacto en el consumo
+      de corriente.
+
+      RAM:  La calidad original del video y su tamaño video, el consumo de memoria RAM será mayo¡r o menos
+
+
+  #### Ancho de banda (BW). 
+
+
+  #### Tiempo de servicio.
+
+
+  #### Almacenamiento (HDD y SSD). 
+
+
+### Analizar la complejidad de los procesos de forma teórica.
 
 ## 2. Selección de Herramientas para Pruebas de Carga
 - Evaluar y elegir entre las siguientes herramientas:
