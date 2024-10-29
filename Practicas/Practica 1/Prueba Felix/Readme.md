@@ -21,7 +21,6 @@ necesarias: python3, flask y las herramients de ffmpeg instaladas. Por lo tanto,
 
 ![img Dockerfile](Imagenes_informe/img_Dockerfile.png "Imagen del dockerfile utilizado")
 
-
 Como JMETER permite hacer pruebas de carga desde el lado cliente, será necesario implementar un servicio web local que permita recibir peticiones y enviar
 una respuesta una vez realizada la conversión. Para ello, implementamos en python y con flask un servicio web en un documento "App.py":
 
@@ -30,6 +29,8 @@ una respuesta una vez realizada la conversión. Para ello, implementamos en pyth
 Este servicio, escuchará (en localhost:5000) las peticiones realizadas desde un navegador o desde JMETER, procesará el video cambiando su formato, calidad y 
 guardando una nueva copia, y devolverá un mensaje de confirmación al terminar.
 
+El despliegue correcto del contenedor se muestra a continuación:
+![img Contenedor](Imagenes_informe/img_Contenedor.png "Imagen del contenedor desplegado")
 
 Para poder hacer la conversion del video se utilizará FFMPEG. El comando utilizado para hacer la conversion se indica en el siguiente apartado.
 
@@ -78,9 +79,9 @@ http://192.168.60.145:5000/convert
 Para poder lanzar peticiones simultaneas y observar el tiempo de respuesta, usaremos JMETER. Este software nos permite editar parametros como tipo de consulta y
 su configuracion,y tambien el número de usuarios que hacen una petición.
 
-![img GET JMETER](Imagenes_informe/img_JMETER_GET.png "Imagen de la configuración del GET en JMETER")
+![img GET JMETER](Imagenes_informe/img_GET.png "Imagen de la configuración del GET en JMETER")
 
-![img Threads JMETER](Imagenes_informe/img_JMETER_Threads.png "Imagen de la configuración de los threads en JMETER")
+![img Threads JMETER](Imagenes_informe/img_Threads.png "Imagen de la configuración de los threads en JMETER")
 
 Para realizar pruebas, primero se ha hecho una unica petición, fijando el valor de "Number of Threads" en 1. Posteriormente se han hecho pruebas con 2, 10 y
 100 usuarios.
@@ -96,7 +97,7 @@ A continuación se comentan los resultados obtenidos para esta primera versión 
 Cuando se realiza la petición con un unico usuario, el tiempo de servicio es de 6 segundos (ya que el servidor no manda la respuesta hasta que el video se ha generado).
 Para este caso, tambien se ha comprobado que el aumento en el consumo de CPU del ordenador, pasando de un 30% cuando no hay peticiones a un 55% cuando hay 1 petición.
 
-![img Prueba 1 JMETER](Imagenes_informe/img_JMETERPrueba1.png "Imagen del Resultado para 1 petición")
+![img Prueba 1 JMETER](Imagenes_informe/img_Prueba1.png "Imagen del Resultado para 1 petición")
 
 #### 2, 10 y 100 usuarios:
 Se ha comprobado que cuando se hace mas de una petición simultanea, es la primera la que mas tarda, ya que es la que genera el video y provoca la respuesta una vez 
@@ -105,9 +106,9 @@ que el video ya esta generado en el directorio destino, por lo que automaticamen
 Adicionalmente, el consumo de CPU no aumenta en consonancia al nº de peticiones, lo que demuestra que no se estaría generando un video por cada petición.
 
 Último Response que corresponde a la primera petición (llega la primera confirmación la última, ya que es la única que genera un video)
-![img Prueba 2_10 JMETER](Imagenes_informe/img_JMETERPrueba2_1.png "Imagen del Resultado para varias peticiones")
+![img Prueba 2_10 JMETER](Imagenes_informe/img_Prueba2_1.png "Imagen del Resultado para varias peticiones")
 
 Anteúltimo Response que corresponde a la última petición (La última petición recibe una respuesta antes que la primera petición)
-![img Prueba 2_10 JMETER](Imagenes_informe/img_JMETERPrueba2_10.png "Imagen del Resultado para varias peticiones")
+![img Prueba 2_10 JMETER](Imagenes_informe/img_Prueba2_10.png "Imagen del Resultado para varias peticiones")
 
 (Los resultados pueden verse en el documento "View Results Tree 1.jmx" incluido en este directorio)
