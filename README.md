@@ -16,6 +16,5 @@ variar estos formatos y calidades.
 
 ## Organización del repositorio
 
-- Indicar estructura de directorios/ficheros y cuáles son los principales
-- Cada práctica debería estar en su propio fichero/directorio
-- Emplear ficheros de texto (ej. markdown vs odt/docx)
+- Cada práctica dispondrá de su directorio.
+- En la Práctica 1 habrá un directorio para cada componente del equipo, donde se indicará lo realizado por cada uno en un fichero Readme por cada directorio.
