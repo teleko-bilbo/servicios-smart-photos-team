@@ -4,12 +4,14 @@
 ## Introduccion
 
 
+
+
 ## Red
 
-### Equipos Workers:
+### Equipos Workers sobre equipos ZX:
 Se configuran sin sistema operativo
 
-Equipo Z34 --> Nombre MV: Worker_2_Z34 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x NAT y 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> NOK (El PC no tiene un interfaz de red)
+Equipo Z34 --> Nombre MV: Worker_2_Z34 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x NAT y 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> NOK (El PC no tiene un interfaz de red) --> Pasar a ordenador de Backup
 
 Equipo Z42 --> Nombre MV: Worker_3_Z42 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x NAT y 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
 
@@ -26,5 +28,13 @@ Equipo Z22 --> Nombre MV: Worker_8_Z22 --> RAM: 10240 MB, Procesadores x4, Memor
 
 ### Equipos K8s controladores todos sobre el equipo Z10:
 
-Nombre MV: K8s_Etcd --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ---->
+Nombre MV: K8s_Etcd --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
+
+Nombre MV: K8s_Easyrsa --> RAM: 4096 MB, Procesadores x1, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
+
+Nombre MV: K8s_Apisaver --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
+
+
+### Equipo con Maas Controller sobre Z9:
+
 
