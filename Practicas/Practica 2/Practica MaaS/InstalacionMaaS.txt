@@ -12,14 +12,9 @@ sudo systemctl disable --now systemd-timesyncd
 
 
 
-echo 'export DBUSER="felix"' >> ~/.bashrc
-echo 'export DBPASS="3056"' >> ~/.bashrc
-echo 'export DBNAME="felixBD"' >> ~/.bashrc
-
-source ~/.bashrc
-
-export MAAS_DBNAME="$DBNAME"
-export MAAS_DBUSER="$DBUSER"
+export DBUSER="user"
+export DBPASS="1234"
+export DBNAME="userDB"
 
 
 
@@ -28,18 +23,15 @@ sudo apt install -y postgresql
 
 
 sudo -i -u postgres psql -c "CREATE USER \"$DBUSER\" WITH ENCRYPTED PASSWORD '$DBPASS'"
-sudo -i -u postgres psql -c "\du"
-
 
 
 sudo -i -u postgres createdb -O "$DBUSER" "$DBNAME"
-sudo -i -u postgres psql -c "\l"
 
 
 
 Editar /etc/postgresql/14/main/pg_hba.conf, adding a line for the newly created database:
 
-host    $MAAS_DBNAME    $MAAS_DBUSER    0/0     md5
+host    userDB    user    0/0     md5
 
 
 
@@ -55,10 +47,4 @@ sudo netstat -tuln | grep 5240
 
 
 http://0.0.0.0:5240/MAAS/r/
-
-
------------> Opcional
-sudo maas apikey --username felix --generate
-maas apikey --username=$MAAS_DBUSER > api-key
------------> Opcional
 
