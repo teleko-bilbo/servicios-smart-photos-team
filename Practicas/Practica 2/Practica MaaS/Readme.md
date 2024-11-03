@@ -2,9 +2,14 @@
 
 
 ## Introduccion
+MaaS, o Metal as a Service, es un modelo que permite a los usuarios administradores implementar y gestionar recursos de hardware físico de manera 
+similar a cómo se gestionan los recursos en la nube. A través de interfaces de programación de aplicaciones (API) y herramientas de automatización, 
+MaaS permite a los administradores de sistemas implementar y escalar servidores, redes y almacenamiento de forma rápida y eficiente. 
 
+Esto simplifica la administración de centros de datos y facilita la asignación dinámica de recursos, reduciendo los costos asociados a la gestión del hardware. MaaS 
+es especialmente útil en entornos de desarrollo, pruebas y producción que requieren escalabilidad en el uso de recursos físicos.
 
-
+Durante esta práctica, se utilizará MaaS para cargar la configuración y recursos a los equipos Worker y controladores K8s.
 
 ## Red
 
@@ -164,8 +169,9 @@ En este caso, indicaremos los de la universidad: 10.10.13.107 10.10.13.108
 Obtenemos la pareja de claves pública-privada e importamos la clave pública a MaaS. Para ello, primero la generamos:
 ```bash
 ssh-keygen -t rsa -b 4096 -C "fsanz003@ikasle.ehu.eus"
-![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
 ```
+![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
+
 La clave, salvo que se haya indicado otro directorio, se habrá creado en ~/.ssh/
 
 ##### 4. Imagen a cargar:
