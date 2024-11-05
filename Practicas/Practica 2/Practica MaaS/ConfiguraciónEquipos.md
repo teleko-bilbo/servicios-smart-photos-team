@@ -53,4 +53,4 @@ Nombre MV: K8s_Apisaver --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (
 
 dar una etiqueta con el destino (k8master, juju controller,...), para que no elija aleatorismente el equipo, 
 
-   ![Configuración IP VM MaaS](Imagenes\RedConfiguration_MAAS_VM.jpg)
+   ![Configuración IP VM MaaS](Imagenes/RedConfiguration_MAAS_VM.jpg)

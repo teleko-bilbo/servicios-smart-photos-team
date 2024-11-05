@@ -124,7 +124,7 @@ Iniciamos sesión con las credenciales indicadas en el paso 7 del anterior apart
 ##### 10.2 Configuración de los DNS
 Utilizaremos los servidores DNS de la universidad: 10.10.13.107 10.10.13.108
 
-   ![DNS Configuration](Imagenes\MAASConfiguration_DNS.jpg)
+   ![DNS Configuration](Imagenes/MAASConfiguration_DNS.jpg)
 
 ##### 10.3 Imagen a cargar:
 Indicamos la imagen que deseamos cargar: Ubuntu 22.04 LTS y arquitectura AMD64.
@@ -140,7 +140,7 @@ ssh-keygen -t rsa -b 4096 -C "admin@maas.com"
 Una vez se ejecuta el comando, se piden cumplimentar los siguientes campos:
 - **file:** se indica el que proporciona por defecto `cat ~/.ssh/id_rsa`.
 
-   ![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
+   ![Ejemplo generación de clave](Imagenes/Clave_ejemp.png)
 
 A continuación, se copia la clabe pública generada:
 
