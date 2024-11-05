@@ -11,62 +11,6 @@ es especialmente útil en entornos de desarrollo, pruebas y producción que requ
 
 Durante esta práctica, se utilizará MaaS para cargar la configuración y recursos a los equipos Worker y controladores K8s.
 
-## Red
-
-A continuación se añade la configuración de los distintos equipos involucrados en la práctica
-
-### Equipos Workers sobre equipos ZX:
-Se configuran sin sistema operativo, esperando el arranque desde la red
-
-Equipo Z34 --> Nombre MV: Worker_2_Z34 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec 
---> Solo arranque red y sin SSOO. ----> NOK (El PC no tiene un interfaz de red) --> Pasar a ordenador de Backup --> mac: 0800 275 123 B8 --> 169.254.156.155
-ip 169.254.255.102 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z42 --> Nombre MV: Worker_3_Z42 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
---> mac: 0800 27A 8CD71 IP --> 169.254.155.130
-ip 169.254.255.104 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z40 --> Nombre MV: Worker_4_Z40 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
---> mac: 0800 279 49200 ip--> 169.254.220.75
-ip 169.254.255.103 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z19 --> Nombre MV: Worker_5_Z19 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-mac: 0800 270 6C00B ip: 169.254.201.218
-ip 169.254.255.108 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z20 --> Nombre MV: Worker_6_Z20 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-mac: 0800 273 FE839 ip: 169.254.244.84
-ip 169.254.255.107 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z21 --> Nombre MV: Worker_7_Z21 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-mac: 0800 270 6DAC2 ip:169.254.126.221
-ip 169.254.255.106 mask 255.255.0.0 gw: 169.254.255.100
-
-
-Equipo Z22 --> Nombre MV: Worker_8_Z22 --> RAM: 10240 MB, Procesadores x4, Memoria video 64 MB, Disco duro: 50 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-mac: 0800 27B 137D5 ip: 169.254.96.231
-ip 169.254.255.105 mask 255.255.0.0 gw: 169.254.255.100
-
-
-z10 ip 169.254.255.101 mask 255.255.0.0 gw: 169.254.255.100
-
-### Equipos K8s controladores todos sobre el equipo Z10:
-
-Nombre MV: K8s_Etcd --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-
-Nombre MV: K8s_Easyrsa --> RAM: 4096 MB, Procesadores x1, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-
-Nombre MV: K8s_Apisaver --> RAM: 8192 MB, Procesadores x2, Memoria Video 16 MB (por defecto), Disco duro: 25 GB, Red: 1x puente en Realtec --> Solo arranque red y sin SSOO. ----> OK
-
-
-dar una etiqueta con el destino (k8master, juju controller,...), para que no elija aleatorismente el equipo, 
-
-
 ### Equipo con Maas Controller sobre Z9 (sobre una máquina virtual de Kubuntu):
 
 A continuación, se añaden los pasos llevados a cabo para instalar y configurar el controlador MaaS:
@@ -113,6 +57,13 @@ sudo -i -u postgres createdb -O "$DBUSER" "$DBNAME"
 ```
 
 #### 6. Modificación del fichero pg_hba.conf en /etc/postgresql/14/main/:
+
+Se edita el ficehro de configuración de PostgreSQL:
+
+```bash
+sudo nano pg_hba.conf
+```
+
 Al final del fichero, se añade lo siguiente:
 
 ```bash
@@ -120,20 +71,31 @@ host    userDB    user    0/0     md5
 ```
 
 #### 7. Configurar usuario en MaaS e inicializar
-Usamos sudo maas init (distinto al comando indicado en el tutorial, pues hemos descargado otra
-versión de MaaS)
+Usamos `sudo maas init` (distinto al comando indicado en el tutorial, pues hemos descargado otra versión de MaaS).
 
 ```bash
 sudo maas init
 ```
 
+##### 7.1 Acceso de un usuario estándar
+
 Durante la creación de un nuevo usuario, indicamos lo siguiente:
-- URL de Canonical RBAC: no se indica nada pues no se usa.
-- Ruta de autencicación Candid: : no se indica nada pues no se usa.
-- Username: usuario
-- Password: 1234
-- Email: fsanz003@ikasle.ehu.eus (podría ser otro, pero es importante no dejar vacio este campo).
-- SSH keys: lo dejamos en blanco.
+- **URL de Canonical RBAC:** no se indica nada pues no se usa.
+- **Ruta de autenticación Candid:** no se indica nada pues no se usa.
+- **Username:** usuario
+- **Password:** 1234
+- **Email:** fsanz003@ikasle.ehu.eus (podría ser otro, pero es importante no dejar vacío este campo).
+- **SSH keys:** lo dejamos en blanco.
+
+##### 7.2 Acceso como administrador
+
+Para crear un usuario con privilegios de administrador, se indica lo siguiente:
+- **URL de Canonical RBAC:** no se indica nada pues no se usa.
+- **Ruta de autenticación Candid:** no se indica nada pues no se usa.
+- **Username:** admin
+- **Password:** admin
+- **Email:** admin@maas.com (o el correo que prefieras, pero no dejes el campo vacío).
+- **SSH keys:** lo dejamos en blanco, posteriormente se añade la clave SSH del administrador.
 
 #### 8. Interfaz gráfica de MaaS:
 Para acceder a la interfaz gráfica de MaaS y asi poder configurar el controladors, desde el navegador:
@@ -142,7 +104,7 @@ http://0.0.0.0:5240/MAAS
 
 
 #### 9. Algunas otras instalaciones:
-Se incluyen algunas herramientas que pueden ser de utilidad después-
+Se incluyen algunas herramientas que pueden ser de utilidad después.
 
 Para poder ver la configuración de interfaces de red:
 ```bash
@@ -156,27 +118,67 @@ sudo apt install wireshark
 #### 9. Configuración del controlador MaaS desde el GUI
 Una vez accedemos desde el navegador al GUI de MaaS
 
-##### 1. Iniciar sesión
+##### 9.1 Iniciar sesión
 Iniciamos sesión con las credenciales indicadas en el paso 7 del anterior apartado.
 
-##### 2. Configuración de los DNS
-Utilizaremos los servidores DNS de la universidad. Para saber cuales son, ejecutamos en el host
-"ipconfig -all" y consultamos el apartado "Servidores DNS".
+##### 9.2 Configuración de los DNS
+Utilizaremos los servidores DNS de la universidad: 10.10.13.107 10.10.13.108
 
-En este caso, indicaremos los de la universidad: 10.10.13.107 10.10.13.108
+    ![DNS Configuration](Imagenes\MAASConfiguration_DNS.jpg)
 
-##### 3. Obtención de la clave ssh:
+##### 9.4 Imagen a cargar:
+Indicamos la imagen que deseamos cargar: Ubuntu 22.04 LTS y arquitectura AMD64.
+
+    ![Image Configuration](Imagenes\ConfigurationImages.jpg)
+
+##### 9.5 Añadir la clave SSH al usuario MaaS:
 Obtenemos la pareja de claves pública-privada e importamos la clave pública a MaaS. Para ello, primero la generamos:
+
 ```bash
-ssh-keygen -t rsa -b 4096 -C "fsanz003@ikasle.ehu.eus"
+ssh-keygen -t rsa -b 4096 -C "admin@maas.com"
 ```
-![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
+Una vez se ejecuta el comando, se piden cumplimentar los siguientes campos:
+- **file:** se indica el que proporciona por defecto `cat ~/.ssh/id_rsa`.
 
-La clave, salvo que se haya indicado otro directorio, se habrá creado en ~/.ssh/
+    ![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
 
-##### 4. Imagen a cargar:
-Indicamos la imagen que deseamos cargar: Ubuntu 22.04 lTS y arquitectura AMD64
+A continuación, se copia la clabe pública generada:
 
-##### 5. 
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+Y se añade al Maas User:
+1. Inicia sesión en la interfaz web de MAAS.
+2. Ve a **Username** (esquina superior derecha) > **Preferences**.
+3. En la sección **SSH keys**, haz clic en **Add key**.
+4. Pega tu clave pública SSH en el campo y guárdala.
+
+##### 9.6 Configuración DHCP, VLAN y Subred
+
+1. En **Networking** > **Subnets**:
+   - Habilita el DHCP.
+   - Crea la subred `192.168.1.0/24` con el gateway del equipo MAAS `192.168.1.1`.
+   - Asigna a esta subred la VID (VLAN ID) `100` con el nombre `smartphotos`.
+
+   A continuación, se muestran las imágenes con la configuración final:
+
+   ![Networking Subnets](Imagenes/MAASConfiguration_NetworkingSubnets.jpg)
+
+   ![Networking Summary](Imagenes/MAASConfiguration_SmartPhotosNetworkSummary.jpg)
+
+##### 9.7 Configuración de Nodos PXE
+
+1. Habilita el arranque/apagado remoto de máquinas VirtualBox mediante el script `vboxpower.py` del proyecto **vboxpower** (asegúrate de haber completado los pasos previos necesarios).
+2. Arranca las máquinas para que las comisione MAAS.
+3. Configura los webhooks correspondientes para que MAAS realice arranque/apagado automático.
+4. Accede por SSH a los nodos y verifica:
+   - Espacio en disco
+   - Uso de CPU
+   - Uso de RAM
+
+   ![Arranque por red VM](Imagenes/MAAS_HardwareMachines.jpg)
+
+
 
 
