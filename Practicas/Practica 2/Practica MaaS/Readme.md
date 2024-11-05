@@ -115,23 +115,23 @@ Para utilizar Wireshark:
 sudo apt install wireshark
 ```
 
-#### 9. Configuración del controlador MaaS desde el GUI
+#### 10. Configuración del controlador MaaS desde el GUI
 Una vez accedemos desde el navegador al GUI de MaaS
 
-##### 9.1 Iniciar sesión
+##### 10.1 Iniciar sesión
 Iniciamos sesión con las credenciales indicadas en el paso 7 del anterior apartado.
 
-##### 9.2 Configuración de los DNS
+##### 10.2 Configuración de los DNS
 Utilizaremos los servidores DNS de la universidad: 10.10.13.107 10.10.13.108
 
-    ![DNS Configuration](Imagenes\MAASConfiguration_DNS.jpg)
+   ![DNS Configuration](Imagenes\MAASConfiguration_DNS.jpg)
 
-##### 9.4 Imagen a cargar:
+##### 10.3 Imagen a cargar:
 Indicamos la imagen que deseamos cargar: Ubuntu 22.04 LTS y arquitectura AMD64.
 
     ![Image Configuration](Imagenes\ConfigurationImages.jpg)
 
-##### 9.5 Añadir la clave SSH al usuario MaaS:
+##### 10.4 Añadir la clave SSH al usuario MaaS:
 Obtenemos la pareja de claves pública-privada e importamos la clave pública a MaaS. Para ello, primero la generamos:
 
 ```bash
@@ -140,7 +140,7 @@ ssh-keygen -t rsa -b 4096 -C "admin@maas.com"
 Una vez se ejecuta el comando, se piden cumplimentar los siguientes campos:
 - **file:** se indica el que proporciona por defecto `cat ~/.ssh/id_rsa`.
 
-    ![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
+   ![Ejemplo generación de clave](Imagenes/Clave_ejemp.pngimagen.png)
 
 A continuación, se copia la clabe pública generada:
 
@@ -154,7 +154,7 @@ Y se añade al Maas User:
 3. En la sección **SSH keys**, haz clic en **Add key**.
 4. Pega tu clave pública SSH en el campo y guárdala.
 
-##### 9.6 Configuración DHCP, VLAN y Subred
+##### 10.5 Configuración DHCP, VLAN y Subred
 
 1. En **Networking** > **Subnets**:
    - Habilita el DHCP.
@@ -167,7 +167,7 @@ Y se añade al Maas User:
 
    ![Networking Summary](Imagenes/MAASConfiguration_SmartPhotosNetworkSummary.jpg)
 
-##### 9.7 Configuración de Nodos PXE
+##### 11 Configuración de Nodos PXE
 
 1. Habilita el arranque/apagado remoto de máquinas VirtualBox mediante el script `vboxpower.py` del proyecto **vboxpower** (asegúrate de haber completado los pasos previos necesarios).
 2. Arranca las máquinas para que las comisione MAAS.
