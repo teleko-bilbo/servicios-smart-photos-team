@@ -183,27 +183,27 @@ Y se añade al Maas User:
 --------------------------------------------------------------
 --------------------------------------------------------------
 --------------------------------------------------------------
-##Se establece un nuevo servidor MAAS: 
+## Se establece un nuevo servidor MAAS: 
 
 -Detalles que tenemos en cuenta:
-##1.) La direccion IP donde ejecutamos MAAS debe ser con la direccion de la interfaz (Ethernet PCI) con la que tenemos la red interna.
+## 1.) La direccion IP donde ejecutamos MAAS debe ser con la direccion de la interfaz (Ethernet PCI) con la que tenemos la red interna.
 
 En nuestro caso, usamos la red 192.168.1.0, con IP 192.168.1.1 (configuracion manual) para la interfaz de la refinterna. Debemos usar  http://192.168.1.1:5240/MAAS/
 
-##2.) Nos dimos cuenta de que no hacia falta una vlan, porque ya disponemos de un router y un switch para conectar los ordenadores (usando la segunda interfaz y configuracion HDCP manual).
+## 2.) Nos dimos cuenta de que no hacia falta una vlan, porque ya disponemos de un router y un switch para conectar los ordenadores (usando la segunda interfaz y configuracion HDCP manual).
 
-##3.) Los ordenadores tienen que desactivar DHCP automatico, y configurarlo manualmente.
+## 3.) Los ordenadores tienen que desactivar DHCP automatico, y configurarlo manualmente.
 
 Debemos desactivar el DHCP automatico en los ordenadores y configurarlos manualmente (OS nativo).
 
 No olvidar que en la MV Kubuntu tambien debe debe configurarse manualmente la IP de la segunda interfaz. Esto es porque el segundo adaptador de red está en modo Bridge. 
 Esta asignación manual de la segunda IP en Kubuntu es necesaria, porque es con la que accederemos a controlar el servidor MAAS. 
 
-##4.) Checar con wireshark las transmisiones entre el worker y el servidor maas.
+## 4.) Checar con wireshark las transmisiones entre el worker y el servidor maas.
 
 Se ve que hay el proceso con DHCP para hacer discovery, offer, request y ackwnowledge- Sin embargo, en adelante ya no se obtenía ningún mensaje para la transferencia TFTP. Finalmente se encontró que el firewall bloqueaba las peticiones para tftp.
 
-##5.) Verificar que el firewall de kubuntu permita la comunicación con la red interna.
+## 5.) Verificar que el firewall de kubuntu permita la comunicación con la red interna.
 
 En su defecto, podemos desactivar totalmente el firewall para que deje pasar todo (solo porque es un entorno de prueba).
 Esto es porque tuvimos el problema de que los ordenadores con netboot no podian iniciar el proceso con protocolo TFTP para la transferencia del ubuntu ephimeral, para que inicie la comision.
@@ -221,12 +221,12 @@ Para no dejar todos expuesto, hacemos:
 Con esto TFTP funciona. Es lo que nos tomo más tiempo.
 https://ubuntuforums.org/showthread.php?t=1576005
 
-##6.) Estamos listos para hacer una pruena de netboot con ordenador que tendra una MV worker.
+## 6.) Estamos listos para hacer una pruena de netboot con ordenador que tendra una MV worker.
 
 Configurar manualmente la IP de la interfaz interna (IP 192.168.1.61 255.255.255.0)
 Iniciamos la máquina virtual.
 
-##7.) Estado NEW en el ciclo de vida del nodo.
+## 7.) Estado NEW en el ciclo de vida del nodo.
 
 El servidor MAAS asignó un IP (en el rango dinamico que configuramos en MAAS para dhcpd).
 
@@ -235,7 +235,7 @@ Inició la descarga de un ubuntu ligero, y tambien recoge datos de la configurac
 Luego de un rato, la maquina virtual se cerro sola.
 En MAAS/Machines, la maquina tiene estado NEW con un aviso en rojo.
 
-##8.) Configuracion de Encendido (aviso en rojo).
+## 8.) Configuracion de Encendido (aviso en rojo).
 
 Ubicarse dentro de Maas/Machine/<nombre de la maquina>/Configuration.
 Ir a la ultima parte para editar o configurar un plan de encendido (POWER).
@@ -247,7 +247,7 @@ Elegir la opcion WeebHook.
 -el resto son opcionales (user pssw)
 Guardar.
 
-##9.) Configurar accionamiento automatico (POWER) de las MV.
+## 9.) Configurar accionamiento automatico (POWER) de las MV.
 
 Mediante un script proporcionado por el profesor.
 El script de python contiene instrucciones que automatizan la accion de POWER ON/OFF de la maquina virtual.
@@ -258,14 +258,14 @@ La configuración se realiza en el OS windows Nativo.
 
 Con esto evitamos bloquear las ordenes de ON/OFF/STATUS que el server MAAS quiera gestionar sobre la mv worker.
 
-##10.) Ejecutar el script python.
+## 10.) Ejecutar el script python.
 
 En el cmd del OS nativo de la mv worker, dirigirse hasta la directorio del script.
 Luego, ejecutar "python vboxpower.py"
 Es posible que haya que ejecutar 2 veces el script, porque a veces no hace caso desde el server.
 La ejecucion del script  muestra la IP que el OS nativo usa para NAT, y tambien puerto. Tener en cuenta el puerto para hacer las prueba en la MV donde está el MAAS.
 
-##11.) En la MV del server MAAS (solo en mv, no en el MAAS).
+## 11.) En la MV del server MAAS (solo en mv, no en el MAAS).
 
 Ingresar a un terminal de la mv
 -Ejecutar un curl a la IP del worker (IP interna del OS nativo)
@@ -279,7 +279,7 @@ La respuesta del curl debe mostrar lo que recoge el script en el OS nativo de la
   sudo curl 192.168.1.61:5241/<nombre_de_la_mw>/status
 -Y eso nos muestra si la maquina esta en running/stop/off
 
-##12.) Configuraion para el COMMISION de la machine del worker
+## 12.) Configuraion para el COMMISION de la machine del worker
 
 Nos vamos al server MAAS (ya con el script corriendo en el OS nativo de la mv worker).
 Seleccionamos nuestra 'machine'.
@@ -292,7 +292,7 @@ Seleccionar las siguiente:
   -retain storage config
 Luego, presionar 'start commisioning'.
 
-##13.) Renudacion del ciclo de vida del nodo.
+## 13.) Renudacion del ciclo de vida del nodo.
 
 La accion de comisionar activa las opciones para controlar el arranque de la mv del worker (gracias al script de python).
 
@@ -300,7 +300,7 @@ En el ordenador de la mv del worker, veremos que se inicia automaticamente la mv
 
 En MAAS, es status de la machine/nodo cambian a commissioning, y continua con la descargas.
 
-##14.) Pase al estado READY
+## 14.) Pase al estado READY
 
 Cuando termina la comission, y esta ha sido exitosa (incluido los logs). Entonces la maquina cambia al estado Ready. 
 
@@ -308,7 +308,7 @@ Este estado indica que el nodo está listo para recibir el despliegue del ubuntu
 
 Ahora sí podemos apagar y encender la mv del worker desde el server MAAS.
 
-##15.) Fin del avance
+## 15.) Fin del avance
 -Desplegamos el resto de workers.
 -Falta configurar el servidor juju y k8s.
 -Hasta aqui llegamos este miercoles.
