@@ -310,7 +310,9 @@ Ahora sí podemos apagar y encender la mv del worker desde el server MAAS.
 
 ## 15.) Fin del avance
 -Desplegamos el resto de workers.
+
 -Falta configurar el servidor juju y k8s.
+
 -Hasta aqui llegamos este miercoles.
 
 
