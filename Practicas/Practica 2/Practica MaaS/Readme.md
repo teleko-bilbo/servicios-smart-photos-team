@@ -288,9 +288,13 @@ La respuesta del curl debe mostrar lo que recoge el script en el OS nativo de la
 
 En el controlador MaaS (ya con el script corriendo en el OS nativo de la mv worker), seleccionamos nuestra 'machine'.
 Luego, en la parte superior seleccionar la opcion 'Take Actions'.
+
 De las opciones que se despliegan, escoger "Commision" (es la unica disponible en ese momento).
+
 Seleccionar las siguiente:
+
   -allow ssh access
+  
   -skip configuring supported BMC
   -retain network config
   -retain storage config
@@ -319,4 +323,12 @@ Ahora sí podemos apagar y encender la mv del worker desde el server MAAS.
 
 -Hasta aqui llegamos este miercoles.
 
+------------>   Sesion extra de laboratio del lunes 12/11/2024 ----------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+--------------------------------------------------------------
+Los K8s están es estado Ready.
+Los worker están en estado Ready.
+Solo falta es servidor juju.
+![image](https://github.com/user-attachments/assets/a216d08a-6fbd-42ed-9874-bf2d58c92b16)
 
