@@ -175,20 +175,28 @@ sudo mount -o loop ubuntu-22.04.5-live-server-amd64.iso /mnt/ubuntu-iso
 Copiamos los ficheros necesarios en el directorio de trabajo, y desmontamos:
 
 ```bash
-cp /mnt/ubuntu-iso/casper/vmlinuz /var/lib/tftpboot/ubuntu/
-cp /mnt/ubuntu-iso/casper/initrd /var/lib/tftpboot/ubuntu/
+sudo mkdir /var/lib/tftpboot/ubuntu/
+sudo cp /mnt/ubuntu-iso/casper/vmlinuz /var/lib/tftpboot/ubuntu/
+sudo cp /mnt/ubuntu-iso/casper/initrd /var/lib/tftpboot/ubuntu/
+sudo cp /mnt/ubuntu-iso/casper/ubuntu-server-minimal.squashfs /var/lib/tftpboot/
 sudo umount /mnt/ubuntu-iso
 ```
 
-
-
+Editamos el fichero /etc/exports:
 
 ```bash
-sudo nano /etc/exports
+kate /etc/exports
 ```
 
 ```bash
-/path/to/ubuntu/root *(rw,sync,no_subtree_check,no_root_squash)
+/var/lib/tftpboot/ubuntu *(rw,sync,no_subtree_check,no_root_squash)
+```
+
+Nos aseguramos de que aplicamos la ocnfiguración:
+
+```bash
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
 ```
 
 
