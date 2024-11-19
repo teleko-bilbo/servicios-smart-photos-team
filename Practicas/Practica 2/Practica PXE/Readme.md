@@ -178,7 +178,7 @@ Copiamos los ficheros necesarios en el directorio de trabajo, y desmontamos:
 sudo mkdir /var/lib/tftpboot/ubuntu/
 sudo cp /mnt/ubuntu-iso/casper/vmlinuz /var/lib/tftpboot/ubuntu/
 sudo cp /mnt/ubuntu-iso/casper/initrd /var/lib/tftpboot/ubuntu/
-sudo cp /mnt/ubuntu-iso/casper/ubuntu-server-minimal.squashfs /var/lib/tftpboot/
+sudo cp /mnt/ubuntu-iso/casper/ubuntu-server-minimal.squashfs /var/lib/tftpboot/ubuntu
 sudo umount /mnt/ubuntu-iso
 ```
 
