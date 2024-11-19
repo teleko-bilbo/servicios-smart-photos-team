@@ -73,9 +73,14 @@ sudo ufw status
 sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 ```
 
+Aprovechamos para añadir un nuevo modelo, ya que se nos pedirá que lo hagamos:
+```bash
+juju add-model my-model
+```
+
 
 ### 6º Verificamos el estado:
-Para comprobar el estado de la nube y sus equipos, podemos usar el siguiente comando:
+Para comprobar el estado de la nube y sus equipos (por ahora solo el controlador), podemos usar el siguiente comando:
 
 ```bash
 juju status
@@ -83,13 +88,58 @@ juju status
 
 
 ### 7º Añadir nuevas maquinas a la nube:
-Una vez verificado que tenemos un controlador activo en la nube de Juju creada, podemos añadir a dicha nube mas maquinas, que serán gestionadas por Juju. En este caso, podremos añadir las maquinas worker, las cuales estan identificadsas en el controlador MaaS con el tag "Worker".
+Una vez verificado que tenemos un controlador activo en la nube de Juju creada, podemos añadir a dicha nube mas maquinas, que serán gestionadas por Juju. En este caso, podremos añadir las maquinas worker, las cuales estan identificadas en el controlador MaaS con el tag "Worker".
 
-Para ello, usamos el siguiente comando, el cual, solicita que Juju provisione una nueva maquina en la nube, aplicando las restricciones indicadas, en este caso el tag:
+Para ello, usamos el siguiente comando, el cual, solicita que Juju provisione una nueva maquina en la nube, aplicando las restricciones indicadas, en este caso el tag, que debe ser Worker:
 
 ```bash
 juju add-machine --constraints "tags=Worker"
 ```
 
 
-## Instalacion del Dashboard Juju
+## Instalación / sincronización de los clientes Juju
+Una vez que ya hemos creado el controlador e indicado el modelo desde unos de los clientes, debemos sincronizar los otras dos clientes. Para ello, instalamos Juju en los otros 2 ordenadores, y despues, en el ordenador inicial (con el cliente ya ocnfigurado), hacemos lo siguiente:
+
+### 1º Creamos un usuario:
+
+Creamos un nuevo usuario mediante el siguiente comando:
+
+```bash
+juju add-user user 1
+```
+
+### 2º Asignamos roles / permisos a dicho usuario:
+Al usuario creado, le asignamos permisos para acceder al controlador y al modelo. Al controlador podrá acceder con permisos de superusuario y al modelo como administrador
+
+```bash
+juju grant user1 superuser
+juju grant user1 admin mymodel
+```
+
+### 3º Compartimos con el nuevo usuario el ID obtenido:
+Al crear el usuario, se nos devolverá un ID, que debe ser compartido con los nuevos usuarios. IMPORTANTE: para evitar errores, quitar de dicho ID la ultima letra y añadimos "=".
+
+```bash
+juju register [ID]
+```
+
+Tras ejecutar este comando, pedirá añadir una contraseña (user) y el nombre del controlador (user-controller).
+
+### 4º Cambio al modelo my-model
+Para que los nuevos clientes puedan ver la misma información que el primer cliente al hacer "juju status", debemos posicionarnos en dicho controlador. Para ello, primero vemos los modelos y luego nos posicionamos
+
+```bash
+juju models
+```
+
+```bash
+juju switch admin/my-model
+```
+
+```bash
+juju status
+```
+
+
+## Instalación del Dashboard Juju
+
