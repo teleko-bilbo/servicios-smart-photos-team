@@ -150,7 +150,7 @@ DEFAULT ubuntu
 LABEL ubuntu
   KERNEL vmlinuz
   INITRD initrd.gz
-  APPEND root=/dev/nfs nfsroot=192.168.1.1:/path/to/ubuntu/root ip=dhcp
+  APPEND root=/dev/nfs nfsroot=192.168.1.1:/var/lib/tftpboot/ubuntu/ ip=dhcp
 ```
 
 Instalamos el servidor NFS (Network File System) que permite compartir directorios de tu sistema con otros dispositivos en una red
@@ -219,4 +219,4 @@ Como vemos en el detalle de los paquetes intercambiados, el equpo a configurar e
 
 ![Foto W2](imgs/w2.jpg)
 
-El envío de tantos mensajes de dicho tipo sin respuesta permite ver que algo de la configuración no funcion correctamente, pues el equipo que deberia contestar a dichas peticiones con un DHCP Response, incluyendo la informacion solicitada.
+El envío de tantos mensajes de dicho tipo sin respuesta permite ver que algo de la configuración no funciona correctamente, pues el equipo que deberia contestar a dichas peticiones con un DHCP Response, incluyendo la informacion solicitada.
