@@ -9,7 +9,7 @@ PXE (Preboot Execution Environment) es un protocolo que permite arrancar un sist
 En nuestro caso, realizaremos el arranque de un equipo al que se le cargará Ubuntu.
 
 
-## Instalacion de Wireshark, DNSmasq y otras herramientas
+## Instalación y configuración de Wireshark, DNSmasq y otras herramientas
 A lo largo de este apartado, indicaremos los procesos llevados a cabo par ainstalar distintas herramientas
 
 ### 1º Instalación de Wireshark
@@ -172,7 +172,7 @@ sudo mkdir /mnt/ubuntu-iso
 sudo mount -o loop ubuntu-22.04.5-live-server-amd64.iso /mnt/ubuntu-iso
 ```
 
-Copiamos los ficheros necesario en el directorio de trabajo, y desmontamos:
+Copiamos los ficheros necesarios en el directorio de trabajo, y desmontamos:
 
 ```bash
 cp /mnt/ubuntu-iso/casper/vmlinuz /var/lib/tftpboot/ubuntu/
@@ -182,13 +182,14 @@ sudo umount /mnt/ubuntu-iso
 
 
 
+
 ```bash
 sudo nano /etc/exports
-````
+```
 
 ```bash
 /path/to/ubuntu/root *(rw,sync,no_subtree_check,no_root_squash)
-````
+```
 
 
 ### 4º Instalación de otras herramientas utiles
@@ -199,3 +200,15 @@ sudo apt update
 sudo apt install htop net-tools
 ```
 
+## Análisis de los resultados mediante Wireshark
+A continuacion, se analizan los resultados del intento de arranque de un euqipo del laboratorio.
+
+Como puede verse en la imagen a continuación, se han capturado mensajes DHCP Discover sucesivos enviados por el equipo cuya configuracion es necesario proveer. 
+
+![Foto w](imgs/w1.jpg)
+
+Como vemos en el detalle de los paquetes intercambiados, el equpo a configurar esta solicitando, entre otros, informacion de red, como por ejemplo, la IP y  mascara de red, si tiempo de validez, su DNS, etc. 
+
+![Foto W2](imgs/w2.jpg)
+
+El envío de tantos mensajes de dicho tipo sin respuesta permite ver que algo de la configuración no funcion correctamente, pues el equipo que deberia contestar a dichas peticiones con un DHCP Response, incluyendo la informacion solicitada.
