@@ -6,7 +6,7 @@ A lo largo de la siguiente práctica, aprenderemos a utilizar Juju . En particul
 
 Juju es una herramienta de orquestación y gestión de aplicaciones en la nube que simplifica el despliegue, configuración, escalado y administración de aplicaciones y servicios en diferentes entornos, ya sean locales, en la nube pública o en nubes privadas.
 
-Tras la explicacion teorica, 
+Tras la explicacion teorica, instalaremos el cliente de Juju en 3 equipos distintos, uno por alumno. Configuraremos los clientes, añadiendo una nueva nube e indicando sus credenciales. Posteriormente, crearemos el controlador y tambien añadiremos nuebas maquinas a la nube.
 
 
 ## Instalación del cliente Juju
