@@ -119,21 +119,27 @@ sudo systemctl status dnsmasq
 
 ### 3º Confifuración del arranque por PXE:
 
-
+Instalamos el entorno que permite el arranque de los dispositivos por red:
 ```bash
 sudo apt update
 sudo apt install pxelinux syslinux-common grub-pc-bin tftp-hpa
 sudo apt-get syslinux
 ```
 
+Instalamos el paquete ubuntu-server:
+
 ```bash
 sudo apt install ubuntu-server
 ```
 
+Copiamos en /var/lib/tftpboot los fichero necesario para configurar el servidor PXE:
+
 ```bash
-sudo cp /usr/lib/syslinux/modules/bios/pxelinux.0 /var/lib/tftpboot/
+sudo cp /usr/lib/PXELINUX/pxelinux.0 /var/lib/tftpboot/
 sudo cp /usr/lib/syslinux/modules/bios/menu.c32 /var/lib/tftpboot/
 ```
+
+Creamos el directorio pxelinux.cfg, doonde despues ubicaremos el fichero default, con el contenido indicado:
 
 ```bash
 sudo mkdir -p /var/lib/tftpboot/pxelinux.cfg
@@ -145,8 +151,44 @@ LABEL ubuntu
   KERNEL vmlinuz
   INITRD initrd.gz
   APPEND root=/dev/nfs nfsroot=192.168.1.1:/path/to/ubuntu/root ip=dhcp
-
 ```
+
+Instalamos el servidor NFS (Network File System) que permite compartir directorios de tu sistema con otros dispositivos en una red
+
+```bash
+sudo apt install nfs-kernel-server
+```
+
+Instalamos la imagen de ubuntu que queremos instalar en el equipo a arrancar. 
+
+```bash
+wget https://releases.ubuntu.com/22.04/ubuntu-22.04.5-live-server-amd64.iso
+```
+
+Montamos la imagen que queremos utilizar, para asi poder acceder a los archivos necesarios:
+
+```bash
+sudo mkdir /mnt/ubuntu-iso
+sudo mount -o loop ubuntu-22.04.5-live-server-amd64.iso /mnt/ubuntu-iso
+```
+
+Copiamos los ficheros necesario en el directorio de trabajo, y desmontamos:
+
+```bash
+cp /mnt/ubuntu-iso/casper/vmlinuz /var/lib/tftpboot/ubuntu/
+cp /mnt/ubuntu-iso/casper/initrd /var/lib/tftpboot/ubuntu/
+sudo umount /mnt/ubuntu-iso
+```
+
+
+
+```bash
+sudo nano /etc/exports
+````
+
+```bash
+/path/to/ubuntu/root *(rw,sync,no_subtree_check,no_root_squash)
+````
 
 
 ### 4º Instalación de otras herramientas utiles
