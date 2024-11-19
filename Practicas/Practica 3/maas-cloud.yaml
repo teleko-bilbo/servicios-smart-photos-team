@@ -1,0 +1,5 @@
+clouds:         # clouds key is required.
+  maas-cloud:
+    type: maas
+    auth-types: [oauth1]
+    endpoint: http://192.168.1.1:5240/MAAS
