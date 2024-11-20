@@ -128,14 +128,18 @@ Tras ejecutar este comando, pedirá añadir una contraseña (user) y el nombre d
 ### 4º Cambio al modelo my-model
 Para que los nuevos clientes puedan ver la misma información que el primer cliente al hacer "juju status", debemos posicionarnos en dicho controlador. Para ello, primero vemos los modelos y luego nos posicionamos
 
+Revisamos los modelos disponibles:
 ```bash
 juju models
 ```
 
+
+Hacemos cambio al modelo que deseamos consultar:
 ```bash
 juju switch admin/my-model
 ```
 
+Comprobamos el cambio de modelo en cada cliente, fijandonos en que todos los clientes veamos el mismo estatus para el mismo modelo
 ```bash
 juju status
 ```
