@@ -1,0 +1,46 @@
+Instalar bare metal Kubernetes con Juju sobre la nube MaaS
+
+juju add-model k8s maas-cloud
+juju deploy charmed-kubernetes --overlay k8s-overlay.yaml
+
+
+Añadir soporte de almacenamiento mediante Longhorn:
+
+helm repo add longhorn https://charts.longhorn.io
+helm repo update
+helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.6.2
+kubectl port-forward service/longhorn-frontend -n longhorn-system 8001:80
+# http://localhost:8001
+
+
+Acceder a dashboard de Kubernetes
+
+kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
+# https://localhost:8443
+
+
+Empleando comandos kubectl comparar con el dashboard
+
+
+
+
+Acceder a dashboard de Longhorn
+
+kubectl get pods -n longhorn-system
+kubectl port-forward -n longhorn-system service/longhorn-frontend 8080:80
+http://localhost:8080
+
+
+
+Escalar horizontalmente el cluster añadiendo y quitando unidades
+
+juju add-unit kubernetes-worker
+
+juju add-machine
+juju add-unit kubernetes-worker --to 2
+
+juju remove-unit kubernetes-worker/1
+
+
+Comprobar con Juju el estado del cluster
+ 
