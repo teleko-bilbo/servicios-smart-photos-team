@@ -1,0 +1,52 @@
+# concebir kubernete como sustena operativo de la nube
+# es un api rest a traves de HTTPS
+# es un servidor sin estado (unidades de alta disponibilidad, puedes tener todos los server que quieras con disponivilidad frente a dallos)
+# etcd: ofrece la parte de almacenamiento persistente (clave / valor)
+# se da un numero de INSTANCIsR INPAR
+# si hay mas de una instancia usar RAFt para almacenar
+# mas de plano del control:
+# el planificador; para asignar recursos a los pods . Si el nodo pide accion de recursos, lo hara el scheduler
+# tener eln cuenta , kubertnetes se configura como programacion declarativa, se dice lo que se quiere...
+# eb ek ckustar tenemos el Kubelet : se encargaa de ejecutar losp ods en cada nodo.
+#    habla con el runtime de contenedores
+#             docke tiene la CR, pero es pesada, no la usamnos
+#            se encarga de que se ejecute el balanceo de carga
+# figura azul para el plano de control, la otra para los worker
+# haremos diferentes pods corriendo en cada nodo.
+# Apartado workloas (para despues)
+# en kubernets no hat como tal almacenamiento persistente. cuanod se mate a l pod, se pierde el estado.
+# Necesitamos guardarlo de forma persistente, eso mediante columentes.
+# Dejaremos disponible el soporte para que las aplicaciones puedan reclamar almacenamiento perisistente (IMPORTANTE!!!!)
+# con un CLAIM se indica cuanto espacio de disco duro se necsita para el VP (IMPORTANTE)
+# Storage Clasesse para que aquel que solicite almacenamiento se le asigne automaticamnete (IMPORTANTE!!!!!!)
+# Kubernetes define un standar de interfaeces , hay otras opciones (ejm: minikube k3s, kind...)
+# Si queremos montar un cluster de produccion ,  a partir de Bare Metal k8s hacia abajo (cuadro).
+# esa de arriba es la que seguimos para montarnos nuertro propio servicio autogestionado
+# en BMK: nuestras MV son como si fueran equipos fisicos.
+# Evitamos mas virtualizaciones intermemdias
+# Elegimos CHarmed Kubernet (aplicaciones son Charm)
+# Cluster real de produccion
+# se puede desplegar kubernet con juju deploy charmed-kubernetes --overlay k8s-overlay.yaml
+# Repositorio charmed kubernet. se instalara el de cuarto link (un yaml) clic para ver.
+# (en el dundle yml) no usaremos redundacia en el PC para reducir equipos, lo ponemos a NULL aldo para reducir la aplicacion. 
+# (dundle) pomner num units a 1, dejar asi worker, los contraints (restringir por etiqueta)
+# generar fichero overlay de yaml (pinchar enlace para ver cosas a podificar)
+# poner algo a null
+# Luego de kubernet, se puede escalar usando juju
+#juju coge una maquina libre , deplega juju con kubelent,por ejemplo.
+# el deploy desplega la app, instala las apps lad deplej 
+# luego vamos a trabajando con la nubre kujberntes
+#usaremos comando kubectl
+#requier fichero de config (cat -/.kube/config (mismo fichero en rcada equipi cliente:
+#para conectarse a un equipo dentro kubnt: (el parte GUI dasborad)
+#(para que el es lo de clouk8js en juju, permite gestionar todo tipo de nubes, dimos de lata la nube masa
+# deplegamos kubernet sobre la nube maas...(2 lineas )
+# Helm es el gestorn de la nube (sus paquetes son chart (no charm)) 
+# como usar heml:helm te permita instalar una aplicacion varias vences. Hay que dar nombreal modulo');
+## opciones en nuestra nubde de kbnt: usar NFS o CEPH tambien longhorn(exclusivo de knbt)
+longhor permite akamacenamiento peristente automaqico cuando se requiere.
+
+hacer: 
+1. vuestra propia nube de kubernet usando juju
+. acceder a los datos del servicio.
+
