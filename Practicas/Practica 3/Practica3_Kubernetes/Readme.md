@@ -1,3 +1,43 @@
+# Practica 3 - Container as a Service (CaaS) - Kubernetes
+
+
+## Introduccion
+
+
+
+
+## Instalación de un Cluster de Kubernetes de producción:
+
+
+
+
+## Ajuste del Cluster mediante "k8s_overlay.yaml":
+
+
+
+
+## Escalado horizontal del cluster:
+
+
+
+
+## Instalacion del CLI y GUI de Kubectl:
+
+
+
+
+## Instalación de Helm:
+
+
+
+
+## Instalación de Longhorn mediante Helm:
+
+
+
+
+
+
 @izaballa010
 
 ![imagen](https://github.com/user-attachments/assets/81f843cb-fe3c-4ad4-a523-60babe733882)
