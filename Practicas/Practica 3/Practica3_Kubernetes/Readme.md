@@ -27,7 +27,7 @@ juju deploy charmed-kubernetes --overlay k8s-overlay.yaml
 Como puede apreciarse en el comando anterior, se hace referenecia a un fichero "k8s_overlay.yaml". Este fichero nos permitirá ajustar el despliegue del cluster de Kubernetes, de la siguiente forma:
  - Crear solo 3 unidades Worker y elegir solo maquinas que tengan el tag "Worker" en MaaS.
  - No crear el balanceador de carga "Kubeapi-load-balancer".
- - Crear solo 12 unidad de "easyrsa", "etcd" y "kubernetes-control-plane", usando para  cada uno el tag correspondiente de la maquina. 
+ - Crear solo 1 unidad de cada "easyrsa", "etcd" y "kubernetes-control-plane", usando para  cada uno el tag correspondiente de la maquina. 
 
 ![cluster](imgs/1_2.png)
 
