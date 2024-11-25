@@ -20,7 +20,7 @@ juju add-model k8s maas-cloud
 juju deploy charmed-kubernetes --overlay k8s-overlay.yaml
 ```
 
-![cluster](imgs/1_1.jpg)
+![cluster](imgs/1_1.png)
 
 
 ## Ajuste del Cluster mediante "k8s_overlay.yaml":
@@ -29,7 +29,7 @@ Como puede apreciarse en el comando anterior, se hace referenecia a un fichero "
  - No crear el balanceador de carga "Kubeapi-load-balancer".
  - Crear solo 12 unidad de "easyrsa", "etcd" y "kubernetes-control-plane", usando para  cada uno el tag correspondiente de la maquina. 
 
-![cluster](imgs/1_2.jpg)
+![cluster](imgs/1_2.png)
 
 
 ## Escalado horizontal del cluster:
