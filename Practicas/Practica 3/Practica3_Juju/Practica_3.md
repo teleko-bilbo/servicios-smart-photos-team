@@ -119,6 +119,8 @@ juju grant user1 admin mymodel
 ### 3º Compartimos con el nuevo usuario el ID obtenido:
 Al crear el usuario, se nos devolverá un ID, que debe ser compartido con los nuevos usuarios. IMPORTANTE: para evitar errores, quitar de dicho ID la ultima letra y añadimos "=".
 
+Key = MFkTCG5ld3VzZXIxMBQTEjE5Mi4xNjguMS4xMToxNzA3MAQgY95Mo8UDo9vChdPbwSJg81z2EuJVpKlhDhumBsKfGEQTE21hYXMtY2xvdWQyLWRlZmF1bHQTAAAA
+
 ```bash
 juju register [ID]
 ```
