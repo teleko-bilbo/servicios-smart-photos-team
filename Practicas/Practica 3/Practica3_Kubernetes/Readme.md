@@ -91,7 +91,7 @@ mkdir ~/.kube
 juju ssh kubernetes-control-plane/1 -- cat config > ~/.kube/config
 ```
 
-El GUI se instalara haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
+El GUI se "instalara" haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
 
 ```bash
 kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
