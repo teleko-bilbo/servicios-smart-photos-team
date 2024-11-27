@@ -122,10 +122,10 @@ Una vez realizado el acceso, podemos visualizar la nube desplegada seleccionando
 
 
 ## Instalación de Helm:
-
-
-
-
+La comunidad de Snapcrafters mantiene la versión Snap del paquete Helm:
+```bash
+sudo snap install helm --classic
+```
 
 ## Instalación de Longhorn mediante Helm:
 Añadir el repositorio Longhorn Helm:
