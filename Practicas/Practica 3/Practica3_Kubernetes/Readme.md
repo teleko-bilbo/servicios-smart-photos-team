@@ -40,7 +40,7 @@ Podemos escalar el cluster ejecutando los siguientes comandos. En este caso, pri
 
 ```bash
 juju add-machine --constraints "tags=Worker"
-juju status
+juju status 
 juju add-unit kubernetes-worker --to <machine-id>
 
 ```
