@@ -120,4 +120,10 @@ kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:4
 ![imagen](https://github.com/user-attachments/assets/bf839db0-da72-487b-b34b-c0a45802c145)
 ![imagen](https://github.com/user-attachments/assets/ac2b3182-6325-4ad9-9d64-0098d973c15b)
 
+```bash
+juju staus
+```
+![imagen](https://github.com/user-attachments/assets/4721325e-9735-4227-b40d-d737f0a0672e)
+
+
 kubectl get all -A
