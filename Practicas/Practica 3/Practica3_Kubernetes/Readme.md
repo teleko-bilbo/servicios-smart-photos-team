@@ -128,11 +128,24 @@ Una vez realizado el acceso, podemos visualizar la nube desplegada seleccionando
 
 
 ## Instalación de Longhorn mediante Helm:
-
-
-
-
-
+Añadir el repositorio Longhorn Helm:
+```bash
+helm repo add longhorn https://charts.longhorn.io
+```
+Fetch los útimos charts del repositorio:
+```bash
+helm repo update
+```
+Instalar Longhorn en el longhorn-system namespace.
+```bash
+helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.6.2
+```
+Para confirmar el deploy se ha realizado, se ejecuta el comando:
+```bash
+kubectl -n longhorn-system get pod
+```
+El resultado es el siguiente:
+[Foto]
 
 @izaballa010
 
