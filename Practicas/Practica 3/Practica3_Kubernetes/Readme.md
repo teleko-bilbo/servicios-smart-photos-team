@@ -85,13 +85,13 @@ Para poder instalar el CLI de Kubectl, debemos primero esperar a que se desplieg
 De esta maquina, obtendremos y copiaremos el fichero "config" de la siguiente manera:
 
 ```bash
-mkdir ~/.kube
-juju ssh kubernetes-control-plane/1 -- cat config > ~/.kube/config
 sudo snap install kubectl --classic
 kubectl version
+mkdir ~/.kube
+juju ssh kubernetes-control-plane/1 -- cat config > ~/.kube/config
 ```
 
-El GUI se instalara haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
+El GUI se "instalara" haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
 
 ```bash
 kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
@@ -119,3 +119,5 @@ kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:4
 ![imagen](https://github.com/user-attachments/assets/0c39c8fa-f984-4adf-a2a9-6adc6fa88d75)
 ![imagen](https://github.com/user-attachments/assets/bf839db0-da72-487b-b34b-c0a45802c145)
 ![imagen](https://github.com/user-attachments/assets/ac2b3182-6325-4ad9-9d64-0098d973c15b)
+
+kubectl get all -A
