@@ -1,22 +1,18 @@
-## Visualización del CLI y GUI de Kubectl:
-Para poder instalar el CLI de Kubectl, debemos primero esperar a que se desplieguen completamente algunas unidades, como por ejemplo, "Kubernetes-control-plane". 
-
-De esta maquina, obtendremos y copiaremos el fichero "config" de la siguiente manera:
-
-```bash
-sudo snap install kubectl --classic
-kubectl version
-mkdir ~/.kube
-juju ssh kubernetes-control-plane/1 -- cat config > ~/.kube/config
-```
-
-El GUI se visualizará haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
-
-```bash
-kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
-```
-Para poder acceder al Dashboard, nos conectamos desde el navegador a la URL "https://localhost:8443/". Despues será necesario indicar en la segunda opcion "kubeconfig file", que será el fichero que habremos btenido del K8s control plane en el paso anterior
-
-FOTO
-
-Una vez realizado el acceso, podemos visualizar la nube desplegada seleccionando "All namespace" en el desplegable superior
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURUakNDQWphZ0F3SUJBZ0lVYWMxZlJrbjdoSUQ4eXoxeDMwK1YzS1dPbWJBd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0Z6RVZNQk1HQTFVRUF3d01NVGt5TGpFMk9DNHhMakV5TUI0WERUSTBNVEV5TmpFM016WTBNVm9YRFRNMApNVEV5TkRFM016WTBNVm93RnpFVk1CTUdBMVVFQXd3TU1Ua3lMakUyT0M0eExqRXlNSUlCSWpBTkJna3Foa2lHCjl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUExYmhBbzcxVFdKTDV0bzdpTW1mYzVlUkNxQ1pid1E4RnV3akkKL2hvVkdXTVlMc3N4V3lLcDdQeVRXcVF3dXZIRmxaelBIeU55SXNOSFdXRGNHeUdsZ3czck5JUjZnaHVOSWlGRwplc3dZUWxFb25NU3lCUHhBN2pOaU1FeEpCbDJUZm5haVdZYkhsMjNObGNxcDVRYk05WVQzS2tFQUt6N0ZNKzdVCmV3dzN0NzJtcUYrdG4xTXRETHhZVDljMk9tUllWU1lmYjhxSGxRU3AzbzZ2bjZHMTRYK0orMTR3RTRmdFg3U2IKcW45QjlwZFp1SzBEN3p2Qlc5RmFZQmhaNmtCcms1RXpwbVp0aW8yVE5qVXNvNGhnajdFbWpMR2lOYmQxUElKego5cnp2UVZOeTkvSmFQSFFFeGhBRmJzeG5US1BISHdtQUx5SVlYbVJVRjZ5YUpseTVrd0lEQVFBQm80R1JNSUdPCk1CMEdBMVVkRGdRV0JCUmw4R2tpOS9WVU13V1V0NnpydkJ1VWxhdDFaakJTQmdOVkhTTUVTekJKZ0JSbDhHa2kKOS9WVU13V1V0NnpydkJ1VWxhdDFacUVicEJrd0Z6RVZNQk1HQTFVRUF3d01NVGt5TGpFMk9DNHhMakV5Z2hScAp6VjlHU2Z1RWdQekxQWEhmVDVYY3BZNlpzREFNQmdOVkhSTUVCVEFEQVFIL01Bc0dBMVVkRHdRRUF3SUJCakFOCkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQUdDUWEwZ0FlVW9RK3RTeERFc0lZekVTbUJOMW03YVFqR3B5TDVBY3kKUHU4NjNyeUh4djVYMGJoM2MxdStrU05hejEyK1d4TFJ6d0lHK2FpTDZHSnlLR3ZleW1yS2lpTGdzdGx4cGNsbQppSlhiRTNVV0oyRkN0YjEyZ2I1bFJySVI4MlVjV2MvNkRLU3Nrc2t1Qyt6VHJQQjdmbmo2a2x6NkFUNldqS3h4ClRYRzNqZ2RQT2ZEejBFUkRhN1phMENOZVZpTkptQUtMV2NuU2RPM2l3a3AyWGF1cGZOUkI0b2UwemZCRnBOYVoKQkY3N0plc2MrYUh3by9uL2xORmpxVUg2YVpFSC94eW5HL0E0bEpQaWY3Mzg4OG9iaVpXUWZpKzhrOFpqVTA4agp5eFo5Q1ZYK0JuRVpnUE0xVVN0SFFxWEZKUVBUakpIRFBNcE81YjVrOHJkMVNRPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==
+    server: https://192.168.1.14:6443
+  name: juju-cluster
+contexts:
+- context:
+    cluster: juju-cluster
+    user: admin
+  name: juju-context
+current-context: juju-context
+kind: Config
+preferences: {}
+users:
+- name: admin
+  user:
+    token: admin::vVu0PAsHKbeTLg48s8bZFDv5P25fnAAQ
