@@ -126,4 +126,10 @@ juju staus
 ![imagen](https://github.com/user-attachments/assets/4721325e-9735-4227-b40d-d737f0a0672e)
 
 
+```bash
+juju add-unit kubernetes-worker
+```
+![imagen](https://github.com/user-attachments/assets/a9305db5-b99c-49a4-8834-e46819e204a2)
+
+
 kubectl get all -A
