@@ -40,7 +40,7 @@ Podemos escalar el cluster ejecutando los siguientes comandos. En este caso, pri
 
 ```bash
 juju add-machine --constraints "tags=Worker"
-juju status
+juju status 
 juju add-unit kubernetes-worker --to <machine-id>
 
 ```
@@ -97,19 +97,56 @@ El GUI se "instalara" haciendo un reenvio de puertos entre la maquina local y el
 kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
 ```
 
+## Visualización del CLI y GUI de Kubectl:
+Para poder instalar el CLI de Kubectl, debemos primero esperar a que se desplieguen completamente algunas unidades, como por ejemplo, "Kubernetes-control-plane". 
+
+De esta maquina, obtendremos y copiaremos el fichero "config" de la siguiente manera:
+
+```bash
+sudo snap install kubectl --classic
+kubectl version
+mkdir ~/.kube
+juju ssh kubernetes-control-plane/1 -- cat config > ~/.kube/config
+```
+
+El GUI se visualizará haciendo un reenvio de puertos entre la maquina local y el servicio Kubernetes Dashboard, permitiendo asi el acceso desde fuera del cluster a un servicio que solo está en dicho cluster.
+
+```bash
+kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:443
+```
+Para poder acceder al Dashboard, nos conectamos desde el navegador a la URL "https://localhost:8443/". Despues será necesario indicar en la segunda opcion "kubeconfig file", que será el fichero que habremos btenido del K8s control plane en el paso anterior
+
+FOTO
+
+Una vez realizado el acceso, podemos visualizar la nube desplegada seleccionando "All namespace" en el desplegable superior
+
 
 ## Instalación de Helm:
+Para poder configurar y utilizar en el paso siguiente Longhorn, tendremos que instalar primero Helm. Para ello usaremos el siguiente comando:
 
-
-
-
+```bash
+sudo snap install helm --classic
+```
 
 ## Instalación de Longhorn mediante Helm:
-
-
-
-
-
+Añadir el repositorio Longhorn Helm:
+```bash
+helm repo add longhorn https://charts.longhorn.io
+```
+Fetch los útimos charts del repositorio:
+```bash
+helm repo update
+```
+Instalar Longhorn en el longhorn-system namespace.
+```bash
+helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.6.2
+```
+Para confirmar el deploy se ha realizado, se ejecuta el comando:
+```bash
+kubectl -n longhorn-system get pod
+```
+El resultado es el siguiente:
+[Foto]
 
 @izaballa010
 
@@ -119,5 +156,17 @@ kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:4
 ![imagen](https://github.com/user-attachments/assets/0c39c8fa-f984-4adf-a2a9-6adc6fa88d75)
 ![imagen](https://github.com/user-attachments/assets/bf839db0-da72-487b-b34b-c0a45802c145)
 ![imagen](https://github.com/user-attachments/assets/ac2b3182-6325-4ad9-9d64-0098d973c15b)
+
+```bash
+juju staus
+```
+![imagen](https://github.com/user-attachments/assets/4721325e-9735-4227-b40d-d737f0a0672e)
+
+
+```bash
+juju add-unit kubernetes-worker
+```
+![imagen](https://github.com/user-attachments/assets/a9305db5-b99c-49a4-8834-e46819e204a2)
+
 
 kubectl get all -A
