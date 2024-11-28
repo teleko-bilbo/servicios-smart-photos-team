@@ -1,0 +1,20 @@
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+
+En el equipo con el controlador, encuentra la clave SSH utilizada por Juju:
+cat ~/.ssh/id_rsa  # o el archivo de clave privado configurado para Juju
+
+
+Copia esta clave al cliente Juju en el que deseas habilitar SSH:
+juju list-users
+scp ~/.ssh/id_rsa usuario@cliente-juju:~/.ssh/
+
+
+Configura el cliente para usar esta clave al conectarse a las máquinas gestionadas
+ssh-add ~/.ssh/id_rsa
+
+
+Desde el controlador, agrega la clave pública del cliente a las máquinas gestionadas.
+juju ssh <nombre-o-id-maquina> "echo '$(cat ~/.ssh/id_rsa.pub)' >> ~/.ssh/authorized_keys"
+
+
+juju register <direccion-del-controlador>
