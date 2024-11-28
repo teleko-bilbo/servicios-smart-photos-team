@@ -1,13 +1,13 @@
-SERVICIOS EN KUBERNETES
-2.1.PRINCIPIOS (Con los que trabajamos)
+#SERVICIOS EN KUBERNETES
+##2.1.PRINCIPIOS (Con los que trabajamos)
 Inmutibilidad -> Trabajar con imágenes
 Configuración declarativa -> Estado definido en fichero *.yanl
 Self-healing (Auto-recuperación) -> Monitoreo constante del estado
 Desacoplamiento -> Pods aislados
-2.2.CLIENTE KUBECTL
+##2.2.CLIENTE KUBECTL
 Comando kubectl -> Se configura en ~/.kube/config (Determinar con que cluster Kubernetes se habla)
 kubectl options -> Todas las opciones de comandos
-2.3.ESPACIOS DE NOMBRES
+##2.3.ESPACIOS DE NOMBRES
 El namespace agrupa todos los objetos del cluster.
 ```bash
 kubect create namespace nombreNamespace
@@ -21,9 +21,9 @@ En el YAML para referenciar el namesapce a desplegar:
 metadata:
   namespace: nombre
 ```
-2.4.VERBOS
+##2.4.VERBOS
 Acciones via API REST.
-2.5.OPERACIONES
+##2.5.OPERACIONES
 Consulta (get todo cholon|describe más legible):
 ```bash
 kubectl get|describe <resource-name> <obj-name>
@@ -36,7 +36,7 @@ Modificar configuración del cluster:
 ```bash
 kubectl apply -f myobj.yaml
 ```
-2.6.ETIQUETAS
+##2.6.ETIQUETAS
 Formato clave/valor
 ```bash
 kubectl label pods bar color=red` #Añadir etiqueta
@@ -66,22 +66,22 @@ selector:
     matchExpressions:
       - {key: ver, operator: In, values: [1, 2]}
 ```
-2.7.WORKLOADS
+##2.7.WORKLOADS
 Aplicaciones que se ejecutan en Kubernetes: 
     Pods, ReplicaSet, Deployment, StatefulSet, DaemonSet, Job, CronJob
-3.PODS
-3.1.INTRODUCCIÓN
+#3.PODS
+##3.1.INTRODUCCIÓN
 Grupo de contenedores:
  - Comparte:  IP, puertos, nombre del host, IPCs, etc.
  - Independiente: CPU, memoria, etc.
 Máquinas == Nodos
 Un pod solo puede estar en un nodo
 Contenedores que tienen que ir en la misma máquina -> Mismo pod
-3.2.PATRONES DE DISEÑO
+##3.2.PATRONES DE DISEÑO
 Patrón sidecar: 
  - Añador HTTPS a un servicio legacy HTTP
  - Añadir configuración de sincronización
-3.3.DESPLIEGUE
+##3.3.DESPLIEGUE
 API Server (Coamndo) -> Fichero etcd -> Scheduler
 YAML básico para desplegar un pod:
 ```bash
