@@ -131,23 +131,36 @@ sudo snap install helm --classic
 ## Instalación de Longhorn mediante Helm:
 
 Añadir el repositorio Longhorn Helm:
+
 ```bash
 helm repo add longhorn https://charts.longhorn.io
 ```
 Fetch los útimos charts del repositorio:
+
 ```bash
 helm repo update
 ```
 Instalar Longhorn en el longhorn-system namespace.
+
 ```bash
 helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.6.2
 ```
 Para confirmar el deploy se ha realizado, se ejecuta el comando:
+
 ```bash
 kubectl -n longhorn-system get pod
 ```
 El resultado es el siguiente:
 [Foto]
+
+
+Una vez ocnfigurado, podemos conectarnos al Dashboard de Longhorn de la siguiente manera:
+
+```bash
+kubectl port-forward service/longhorn-frontend -n longhorn-system 8001:80
+```
+tras realizar el reenvio de puertos para el dashboard, nos conectamos a este a traves de la URL: http://localhost:8001 
+
 
 
 ## Configuración de SSH en el resto de clientes (aquellos que no estan en el controlador MaaS):
