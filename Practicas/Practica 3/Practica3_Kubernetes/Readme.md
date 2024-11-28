@@ -129,6 +129,7 @@ sudo snap install helm --classic
 ```
 
 ## Instalación de Longhorn mediante Helm:
+
 Añadir el repositorio Longhorn Helm:
 ```bash
 helm repo add longhorn https://charts.longhorn.io
@@ -147,6 +148,25 @@ kubectl -n longhorn-system get pod
 ```
 El resultado es el siguiente:
 [Foto]
+
+
+## Configuración de SSH en el resto de clientes (aquellos que no estan en el controlador MaaS):
+Para poder conectarnos mediante SSH a las maquinas que hemos desplegado, será necesario realizar los siguientes pasoso en aquellos ordenadores en los que hayamos instalado clientes Juju:
+
+### Copiamos el fichero id_rsa en los otros equipos:
+El fichero "id_rsa" obtenido del equipo con el controlador MaaS del directorio home/student/.ssh tendra que copiarse en ese mismo directorio pero en los equipos que queremos configurar:
+
+Una vez copiado el fichero en el directorio indicado, ejecutamos:
+
+```bash
+sudo chmod 600 id_rsa
+```
+
+
+
+
+
+
 
 @izaballa010
 
