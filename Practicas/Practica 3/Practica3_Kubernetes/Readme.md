@@ -116,7 +116,7 @@ kubectl port-forward service/kubernetes-dashboard -n kubernetes-dashboard 8443:4
 ```
 Para poder acceder al Dashboard, nos conectamos desde el navegador a la URL "https://localhost:8443/". Despues será necesario indicar en la segunda opcion "kubeconfig file", que será el fichero que habremos btenido del K8s control plane en el paso anterior
 
-FOTO
+![Foto 1](imgs/7.png)
 
 Una vez realizado el acceso, podemos visualizar la nube desplegada seleccionando "All namespace" en el desplegable superior
 
@@ -145,16 +145,17 @@ Instalar Longhorn en el longhorn-system namespace.
 ```bash
 helm install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.6.2
 ```
-Para confirmar el deploy se ha realizado, se ejecuta el comando:
+Para confirmar que el deploy se ha realizado, se ejecuta el comando:
 
 ```bash
 kubectl -n longhorn-system get pod
 ```
 El resultado es el siguiente:
-[Foto]
+
+![Foto 1](imgs/8.png)
 
 
-Una vez ocnfigurado, podemos conectarnos al Dashboard de Longhorn de la siguiente manera:
+Una vez configurado, podemos conectarnos al Dashboard de Longhorn de la siguiente manera:
 
 ```bash
 kubectl port-forward service/longhorn-frontend -n longhorn-system 8001:80
@@ -190,16 +191,4 @@ sudo chmod 600 id_rsa
 ![imagen](https://github.com/user-attachments/assets/bf839db0-da72-487b-b34b-c0a45802c145)
 ![imagen](https://github.com/user-attachments/assets/ac2b3182-6325-4ad9-9d64-0098d973c15b)
 
-```bash
-juju staus
-```
-![imagen](https://github.com/user-attachments/assets/4721325e-9735-4227-b40d-d737f0a0672e)
 
-
-```bash
-juju add-unit kubernetes-worker
-```
-![imagen](https://github.com/user-attachments/assets/a9305db5-b99c-49a4-8834-e46819e204a2)
-
-
-kubectl get all -A
