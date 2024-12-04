@@ -148,7 +148,3 @@ Comprobamos el cambio de modelo en cada cliente, fijandonos en que todos los cli
 juju status
 ```
 
-
-## Acceso del Dashboard Juju
-Para acceder al dashboard de 
-
