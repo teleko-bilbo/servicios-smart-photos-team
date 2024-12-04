@@ -149,5 +149,6 @@ juju status
 ```
 
 
-## Instalación del Dashboard Juju
+## Acceso del Dashboard Juju
+Para acceder al dashboard de 
 
