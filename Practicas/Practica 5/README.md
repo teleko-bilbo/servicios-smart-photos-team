@@ -103,7 +103,7 @@ spec:
           service:
             name: kuard
             port:
-              number: 80
+              number: 8080
   - host: "kuardgreen"
     http:
       paths:
@@ -113,7 +113,7 @@ spec:
           service:
             name: kuardgreen
             port:
-              number: 80
+              number: 8080
 ```
 Aplicar el manifiesto:
 ```bash
