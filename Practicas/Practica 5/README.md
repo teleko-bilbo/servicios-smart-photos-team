@@ -1,6 +1,4 @@
 # Practica 5 - Escalabilidad y Disponibilidad en Kubernetes
-
-# Introduccion
 # 1. LoadBlancer
 Implementación de LoadBalancer para clusters Kubernetes bare metal. 
 Instalación:
