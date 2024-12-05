@@ -9,8 +9,8 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm install -n metallb metallb bitnami/metallb --create-namespace # Para crear en una namespace
 ```
-Común para todos el namespace. Aviso: Reservar/excluir rango de IPs del servidor DHCP del MaaS.
-YAML:
+Configurar MetalLB MetalLB necesita una configuración para definir el rango de IPs que se asigna (Reservar/excluir rango de IPs del servidor DHCP del MaaS). Crear el archivo de configuración metallb-config.yaml:
+YAML (Común para todos el namespace):
 ```bash
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
@@ -34,4 +34,9 @@ spec:
 Aplicar la configuración:
 ```bash
 kubectl apply -f metallb-config.yaml
+```
+
+Edita el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer:
+```bash
+kubectl edit service kuard
 ```
