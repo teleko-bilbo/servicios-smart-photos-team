@@ -40,3 +40,13 @@ Edita el servicio kuard de la práctica anterior para que sea de tipo LoadBalanc
 ```bash
 kubectl edit service kuard
 ```
+
+Cambia el tipo a LoadBalancer:
+```bash
+spec:
+  type: LoadBalancer
+```
+
+Aplica el manifiesto:
+kubectl apply -f kuard-service.yaml
+
