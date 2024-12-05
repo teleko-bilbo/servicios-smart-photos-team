@@ -50,3 +50,19 @@ spec:
 Aplica el manifiesto:
 kubectl apply -f kuard-service.yaml
 
+Verifica que el servicio tiene una IP externa asignada:
+```bash
+kubectl get svc kuard
+```
+La salida debería incluir algo como esto:
+```bash
+NAME    TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
+kuard   LoadBalancer   10.96.123.456   192.168.1.240    80:32000/TCP   5m
+```
+La columna EXTERNAL-IP mostrará la IP asignada por MetalLB.
+Accede al servicio usando la IP externa en un navegador o con curl:
+```bash
+curl http://<EXTERNAL-IP>
+```
+Para verificar el balanceo de carga:
+- Escala el despliegue de kuard a múltiples réplicas:
