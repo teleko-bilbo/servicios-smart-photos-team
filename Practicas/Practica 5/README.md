@@ -30,3 +30,8 @@ spec:
  addresses:
  - 192.168.13.120-192.168.13.150  # Cambia este rango según tu red
 ```
+
+Aplicar la configuración:
+```bash
+kubectl apply -f metallb-config.yaml
+```
