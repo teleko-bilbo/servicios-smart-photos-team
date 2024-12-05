@@ -62,19 +62,28 @@ curl http://<EXTERNAL-IP>:8080
 O con el buscador:
 (Imágenes del resultado del buscador)
 # 2.Ingress
+--- (Completar)
+Con el el controlador ingress-nginx desplegado, verifica que el controlador está corriendo y las etiquetas:
+```bash
+kubectl get pods -n ingress-nginx --show labels
+```
 ---
 Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Toma nota de la IP externa para usarla más adelante):
 ```bash
-kubectl get svc -n ingress-nginx
+kubectl get svc -n ingress-nginx # 192.168.1.196
 ```
+Crea dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
+Deployment y servicio del primer servicio (kuard)
+Deployment y servicio del primer servicio (kuardgreen)
+
 Editar el archivo /etc/hosts del cliente para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Por ejemplo:
 ```bash
 sudo nano /etc/hosts
 ```
-Agregar estas líneas:
+Agregar estas líneas (<external-ip-of-ingress-nginx> = 192.168.1.196): 
 ```bash
-<external-ip-of-ingress-nginx> "alpaca.dyd.eus"
-<external-ip-of-ingress-nginx> "bandicoot.dyd.eus"
+<external-ip-of-ingress-nginx> kuard
+<external-ip-of-ingress-nginx> kuardgreen
 ```
 Crea un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
 ```bash
@@ -84,24 +93,24 @@ metadata:
   name: virtualhost
 spec:
   rules:
-  - host: "alpaca.dyd.eus"
+  - host: "kuard"
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: alpaca
+            name: kuard
             port:
               number: 80
-  - host: "bandicoot.dyd.eus"
+  - host: "kuardgreen"
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: bandicoot
+            name: kuardgreen
             port:
               number: 80
 ```
@@ -110,8 +119,8 @@ Aplicar el manifiesto:
 kubectl apply -f ingress.yaml
 ```
 Desde el navegador web:
-- Acceder a http://alpaca.dyd.eus para verificar que responde el servicio alpaca.
-- Acceder a http://bandicoot.dyd.eus para verificar que responde el servicio bandicoot.
+- Acceder a http://kuard para verificar que responde el servicio kuard.
+- Acceder a http://kuardgreen para verificar que responde el servicio kuardgreen.
 Refrescar la página varias veces y observar cómo las respuestas provienen de diferentes pods, lo que indica que el balanceo de carga funciona.
 (Fotos del balanceo) 
 
