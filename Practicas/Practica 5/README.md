@@ -62,7 +62,21 @@ curl http://<EXTERNAL-IP>:8080
 O con el buscador:
 (Imágenes del resultado del buscador)
 # 2.Ingress
-Aplicar el siguiente manifiesto para exponer el servicio:
+---
+Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Toma nota de la IP externa para usarla más adelante):
+```bash
+kubectl get svc -n ingress-nginx
+```
+Editar el archivo /etc/hosts del cliente para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Por ejemplo:
+```bash
+sudo nano /etc/hosts
+```
+Agregar estas líneas:
+```bash
+<external-ip-of-ingress-nginx> app1.local
+<external-ip-of-ingress-nginx> app2.local
+```
+Crea un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
 ```bash
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -91,3 +105,4 @@ spec:
             port:
               number: 80
 ```
+
