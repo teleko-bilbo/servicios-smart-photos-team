@@ -68,6 +68,7 @@ Con el el controlador ingress-nginx desplegado, verifica que el controlador est√
 kubectl get pods -n ingress-nginx --show labels
 ```
 ---
+
 Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Toma nota de la IP externa para usarla m√°s adelante):
 ```bash
 kubectl get svc -n ingress-nginx # 192.168.1.196
