@@ -55,7 +55,7 @@ kuard   LoadBalancer   10.152.183.104   192.168.1.195    80:30706/TCP   5m
 La columna EXTERNAL-IP mostrará la IP asignada por MetalLB.
 Accede al servicio usando la IP externa en un navegador o con curl:
 ```bash
-curl http://<EXTERNAL-IP>
+curl http://<EXTERNAL-IP>:8080
 ```
 Para verificar el balanceo de carga:
 - Escala el despliegue de kuard a múltiples réplicas:
