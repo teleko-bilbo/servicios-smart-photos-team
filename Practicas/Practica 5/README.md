@@ -61,3 +61,33 @@ curl http://<EXTERNAL-IP>:8080
 ```
 O con el buscador:
 (Imágenes del resultado del buscador)
+# 2.Ingress
+Aplicar el siguiente manifiesto para exponer el servicio:
+```bash
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: virtualhost
+spec:
+  rules:
+  - host: "alpaca.dyd.eus"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: alpaca
+            port:
+              number: 80
+  - host: "bandicoot.dyd.eus"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bandicoot
+            port:
+              number: 80
+```
