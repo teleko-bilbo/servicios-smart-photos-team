@@ -174,5 +174,28 @@ spec:
         claimName: example-pvc
 ```
 
+# 4.4.StatefulSet
+Simiñar al ReplicaSets -> Gestiona x réplicas de los pods
 
+Diferencias con ReplicaSet:
+- Cada réplica (no independiente) nombre de host persistente con índice: database-0, database-1, etc.
+- Las réplicas se crean en orden, de una en una, cuando está lista la anterior
+- Al borrar se hace en orden inverso (último índice al promero)
+- Al borrar se mantienen los PVs (en ReplicaSet por defecto no), a menos que no se borre los pods que lo utilicen
+- Sin IP común (cada uno la suya) -> Servicio headless: DNS de cada nodo y DNS del servicio con todos los nodos ("None" en .spec.clusterIP -> sin IP de cluster ni balanceo)
 
+No posible Deployments de StatefulSets.
+
+Cada pod define su PVC (10 volúmenes por 10 pods) con:
+```bash
+volumeClaimTemplates: # Se repite ppor cada pod
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      # Si no se pone coge la de por defecto (kubectl get storageclass)
+      storageClassName: "my-storage-class"
+      resources:
+        requests:
+          storage: 1Gi
+```
