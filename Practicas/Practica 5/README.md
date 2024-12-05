@@ -66,3 +66,12 @@ curl http://<EXTERNAL-IP>
 ```
 Para verificar el balanceo de carga:
 - Escala el despliegue de kuard a múltiples réplicas:
+```bash
+kubectl scale deployment kuard --replicas=3
+```
+- Realiza múltiples solicitudes al servicio y observa cómo las solicitudes se distribuyen entre las réplicas. Esto puede hacerse con un script o herramientas como curl.
+```bash
+while true; do curl http://<EXTERNAL-IP>; sleep 1; done
+```
+Cada respuesta debería provenir de diferentes pods, indicando que el balanceo está funcionando.
+
