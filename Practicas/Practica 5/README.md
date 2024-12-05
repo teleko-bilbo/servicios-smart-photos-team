@@ -105,4 +105,13 @@ spec:
             port:
               number: 80
 ```
+Aplicar el manifiesto:
+```bash
+kubectl apply -f ingress.yaml
+```
+Desde el navegador web:
+- Acceder a http://alpaca.dyd.eus para verificar que responde el servicio alpaca.
+- Acceder a http://bandicoot.dyd.eus para verificar que responde el servicio bandicoot.
+Refrescar la página varias veces y observar cómo las respuestas provienen de diferentes pods, lo que indica que el balanceo de carga funciona.
+(Fotos del balanceo) 
 
