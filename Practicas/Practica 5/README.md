@@ -32,20 +32,20 @@ Aplicar la configuración:
 ```bash
 kubectl apply -f metallb.yaml
 ```
-Edita el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer:
+Editar el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer:
 ```bash
 kubectl edit service kuard
 ```
-Cambia el tipo a LoadBalancer:
+Cambiar el tipo a LoadBalancer:
 ```bash
 spec:
   type: LoadBalancer
 ```
-Aplica el manifiesto:
+Aplicar el manifiesto:
 ```bash
 kubectl apply -f service.yaml
 ```
-Verifica que el servicio tiene una IP externa asignada:
+Verificar que el servicio tiene una IP externa asignada:
 ```bash
 kubectl get svc kuard
 ```
@@ -54,26 +54,26 @@ La salida debería incluir algo como esto:
 NAME    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)          AGE
 kuard   LoadBalancer   10.152.183.104   192.168.1.195    8080:30706/TCP   5m
 ```
-La columna EXTERNAL-IP mostrará la IP asignada por MetalLB.
-Accede al servicio usando la IP externa en un navegador o con curl:
+La columna EXTERNAL-IP muestra la IP asignada por MetalLB.
+Acceder al servicio usando la IP externa en un navegador o con curl:
 ```bash
 curl http://<EXTERNAL-IP>:8080
 ```
-O con el buscador:
+Con el buscador:
 (Imágenes del resultado del buscador)
 # 2.Ingress
 --- (Completar)
-Con el el controlador ingress-nginx desplegado, verifica que el controlador está corriendo y las etiquetas:
+Con el el controlador ingress-nginx desplegado, verificar que el controlador está corriendo y las etiquetas:
 ```bash
 kubectl get pods -n ingress-nginx --show labels
 ```
 --- (Completar)
 
-Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Toma nota de la IP externa para usarla más adelante):
+Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Tomar nota de la IP externa para usarla más adelante):
 ```bash
 kubectl get svc -n ingress-nginx # 192.168.1.196
 ```
-Crea dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
+Crear dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
 Deployment y servicio del primer servicio (kuard)
 Deployment y servicio del primer servicio (kuardgreen)
 
@@ -86,7 +86,7 @@ Agregar estas líneas (external-ip-of-ingress-nginx = 192.168.1.196):
 <external-ip-of-ingress-nginx> kuard
 <external-ip-of-ingress-nginx> kuardgreen
 ```
-Crea un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
+Crear un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
 ```bash
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -124,4 +124,3 @@ Desde el navegador web:
 - Acceder a http://kuardgreen para verificar que responde el servicio kuardgreen.
 Refrescar la página varias veces y observar cómo las respuestas provienen de diferentes pods, lo que indica que el balanceo de carga funciona.
 (Fotos del balanceo) 
-
