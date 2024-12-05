@@ -60,4 +60,4 @@ Accede al servicio usando la IP externa en un navegador o con curl:
 curl http://<EXTERNAL-IP>:8080
 ```
 O con el buscador:
-
+(Imágenes del resultado del buscador)
