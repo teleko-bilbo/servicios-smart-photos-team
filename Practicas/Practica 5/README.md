@@ -26,7 +26,7 @@ metadata:
  namespace: metallb
 spec:
  addresses:
- - 192.168.13.120-192.168.13.150  # Cambia este rango según tu red
+ - 192.168.1.195-192.168.1.205  # Cambia este rango según tu red
 ```
 
 Aplicar la configuración:
