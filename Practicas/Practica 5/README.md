@@ -50,7 +50,7 @@ kubectl get svc kuard
 La salida debería incluir algo como esto:
 ```bash
 NAME    TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
-kuard   LoadBalancer   10.96.123.456   192.168.1.240    80:32000/TCP   5m
+kuard   LoadBalancer   10.152.183.104   192.168.1.195    80:30706/TCP   5m
 ```
 La columna EXTERNAL-IP mostrará la IP asignada por MetalLB.
 Accede al servicio usando la IP externa en un navegador o con curl:
