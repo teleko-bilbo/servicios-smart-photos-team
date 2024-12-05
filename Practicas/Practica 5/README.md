@@ -28,26 +28,21 @@ spec:
  addresses:
  - 192.168.1.195-192.168.1.205  # Cambia este rango según tu red
 ```
-
 Aplicar la configuración:
 ```bash
 kubectl apply -f metallb.yaml
 ```
-
 Edita el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer:
 ```bash
 kubectl edit service kuard
 ```
-
 Cambia el tipo a LoadBalancer:
 ```bash
 spec:
   type: LoadBalancer
 ```
-
 Aplica el manifiesto:
-kubectl apply -f kuard-service.yaml
-
+kubectl apply -f service.yaml
 Verifica que el servicio tiene una IP externa asignada:
 ```bash
 kubectl get svc kuard
