@@ -73,8 +73,8 @@ sudo nano /etc/hosts
 ```
 Agregar estas líneas:
 ```bash
-<external-ip-of-ingress-nginx> app1.local
-<external-ip-of-ingress-nginx> app2.local
+<external-ip-of-ingress-nginx> "alpaca.dyd.eus"
+<external-ip-of-ingress-nginx> "bandicoot.dyd.eus"
 ```
 Crea un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
 ```bash
