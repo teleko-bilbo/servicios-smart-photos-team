@@ -42,7 +42,9 @@ spec:
   type: LoadBalancer
 ```
 Aplica el manifiesto:
+```bash
 kubectl apply -f service.yaml
+```
 Verifica que el servicio tiene una IP externa asignada:
 ```bash
 kubectl get svc kuard
