@@ -81,7 +81,7 @@ Editar el archivo /etc/hosts del cliente para asociar la IP externa del servicio
 ```bash
 sudo nano /etc/hosts
 ```
-Agregar estas líneas (<external-ip-of-ingress-nginx> = 192.168.1.196): 
+Agregar estas líneas (external-ip-of-ingress-nginx = 192.168.1.196): 
 ```bash
 <external-ip-of-ingress-nginx> kuard
 <external-ip-of-ingress-nginx> kuardgreen
