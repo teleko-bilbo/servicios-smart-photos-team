@@ -1,0 +1,21 @@
+apiVersion: apps/v1   # Versión de la API para el recurso Deployment
+kind: Deployment      # Tipo de recurso: Deployment
+metadata:  
+  namespace: dydvictor           # Metadatos del Deployment
+  name: kuard         # Nombre del Deployment
+spec:                 # Especificación del Deployment
+  replicas: 3         # Número deseado de réplicas (pods)
+  selector:           # Selector para gestionar los pods de este Deployment
+    matchLabels:      # Define etiquetas que los pods deben tener para ser gestionados por este Deployment
+      app: kuard      # Etiqueta que deben tener los pods para ser gestionados por este Deployment
+  template:           # Template del pod, describe cómo serán los pods del Deployment
+    metadata:         # Metadatos del pod template
+      labels:         # Etiquetas aplicadas a los pods creados por el Deployment
+        app: kuard    # Etiqueta utilizada para identificar los pods
+    spec:             # Especificación del pod
+      containers:     # Lista de contenedores dentro del pod
+        - image: gcr.io/kuar-demo/kuard-amd64:blue # Imagen del contenedor
+          name: kuard # Nombre del contenedor
+          ports:      # Lista de puertos expuestos por el contenedor
+            - containerPort: 8080 # Puerto expuesto por el contenedor dentro del pod
+              protocol: TCP       # Protocolo del puerto, en este caso TCP  
