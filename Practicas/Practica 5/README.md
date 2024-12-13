@@ -1,66 +1,85 @@
 # Practica 5 - Escalabilidad y Disponibilidad en Kubernetes
+
 # 1. LoadBlancer
-Implementación de LoadBalancer para clusters Kubernetes bare metal. 
-Instalación:
+Debemos implementar un balanceador de carga bare metal para nuestro clusters de Kubernetes. 
+
+La instalacion la hacemos mediante la ejecucion de los siguientes comandos. Primero añadimos un nuevo repositorio de helm y luego instalamos metallb creando un namespace propio: 
+
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add bitnami https://charts.bitnami.com/bitnami # añade un nuevo repositoio de helm
 helm repo update
-helm install -n metallb metallb bitnami/metallb --create-namespace # Para crear en una namespace
+helm install -n metallb metallb bitnami/metallb --create-namespace # Para crear en una namespace 
 ```
-Configurar MetalLB -> Se necesita una configuración para definir el rango de IPs que se asigna (Reservar/excluir rango de IPs del servidor DHCP del MaaS). Crear el archivo de configuración metallb.yaml:
-YAML (Común para todos el namespace):
+
+Una vez instalado metallb, se necesita configurarlo para definir el rango de IPs que entregará a los servicios. Se usara un rango que excluya los rangos de direcciones IP que ya han sido usadas. Para eso creamos un ficheo "metallb.yaml", con el siguiente contenido:
+
 ```bash
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
- name: example
- namespace: metallb
+  name: example
+  namespace: metallb
 spec:
- ipAddressPools:
- - metallbpool
---- # Dos YAML concatenados
+  ipAddressPools:
+  - metallbpool
+---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
- name: metallbpool
- namespace: metallb
+  name: metallbpool
+  namespace: metallb
 spec:
- addresses:
- - 192.168.1.195-192.168.1.205  # Cambia este rango según tu red
+  addresses:
+  - 192.168.1.195-192.168.1.205
 ```
-Aplicar la configuración:
+
+Aplicamos la configuración:
 ```bash
 kubectl apply -f metallb.yaml
 ```
-Editar el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer:
+
+![Foto2](imgs/2.png)
+
+Ahora editamos el servicio kuard de la práctica anterior para que sea de tipo LoadBalancer. Para eso, usaremos un fichero .yaml en el que se indica tipo como LoadBalancer:
+
 ```bash
-kubectl edit service kuard
+apiVersion: v1       # Versión de la API
+kind: Service        # Tipo de objeto
+metadata:    
+  namespace: dydvictor       # Metadatos del objeto
+  name: kuardgreen        # Nombre del servicio
+spec:                # Especificaciones del servicio
+  ports:             # Puertos del servicio
+  - port: 8080       # Puerto expuesto
+    targetPort: 8080 # Puerto al que se redirige
+    protocol: TCP    # Protocolo utilizado
+  selector:          # Selección de pods
+    app: kuard       # Etiqueta para seleccionar los pods
+  type: LoadBalancer    # Tipo de servicio
 ```
-Cambiar el tipo a LoadBalancer:
-```bash
-spec:
-  type: LoadBalancer
-```
-Aplicar el manifiesto:
+Aplicamos los cambios:
 ```bash
 kubectl apply -f service.yaml
 ```
-Verificar que el servicio tiene una IP externa asignada:
+
+Para comprobar los cambios, verificamos que el servicio tiene una IP externa asignada usando el siguiente comando:
+
 ```bash
-kubectl get svc kuard
+kubectl get all -o wide
 ```
-La salida debería incluir algo como esto:
-```bash
-NAME    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)          AGE
-kuard   LoadBalancer   10.152.183.104   192.168.1.195    8080:30706/TCP   5m
-```
-La columna EXTERNAL-IP muestra la IP asignada por MetalLB.
-Acceder al servicio usando la IP externa en un navegador o con curl:
+
+![Foto2](imgs/3.png)
+
+La columna EXTERNAL-IP muestra la IP asignada por MetalLB. Vemos que es una IP dentro del rango que nosotros le hemos indicado para que entregue, y que no interfiere con el rango de direcciones ya asignadas a otros equipos.
+
+Accedemos al servicio usando la IP externa en un navegador o con curl:
+
 ```bash
 curl http://<EXTERNAL-IP>:8080
 ```
-Con el buscador:
-(Imágenes del resultado del buscador)
+
+Si accedemos repetidamente, veremos que cambia la direccion IP del equipo que sirve contenido, siendo una de las 3 IPs que tiene cada uno de los PODs desplegados.
+
 # 2.Ingress
 --- (Completar)
 Con el el controlador ingress-nginx desplegado, verificar que el controlador está corriendo y las etiquetas:
