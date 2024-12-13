@@ -140,13 +140,64 @@ Agregamos estas líneas al final del fichero:
 
 
 
-Aplicar el manifiesto:
+Aplicar el manifiesto actualizado:
 ```bash
-kubectl apply -f ingress.yaml
+kubectl apply -f ingressconfig.yaml
 ```
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: virtualhost
+spec:
+  rules:
+  - host: kuard
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kuard
+            port:
+              number: 8080
+
+  - host: "kuardgreen"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kuardgreen
+            port:
+              number: 8080
+```
+
+Este manifiesto define un recurso Ingress en Kubernetes, que actúa como un enrutador HTTP/S para exponer servicios desde del clúster hacia el exterior. 
+Hay alguno aspectos a tener en cuenta:
+
+-Está identificado como virtualhost.
+-Reglas de Enrutamiento:
+
+-Definimos dos reglas para enrutar tráfico HTTP en función del nombre del host:
+
+-Host 1: kuard:
+Todo el tráfico dirigido a este host (/) será enviado al servicio kuard en el puerto 8080.
+
+-Host 2: kuardgreen:
+Todo el tráfico dirigido a este host (/) será enviado al servicio kuardgreen en el puerto 8080.
+Tipo de Ruta:
+
+El pathType está configurado como Prefix, lo que significa que se aplicará a todas las rutas que comiencen con el prefijo especificado (/).
+Esta declarativa indica cómo enrutar tráfico HTTP de dos hosts (kuard y kuardgreen) hacia los servicios correspondientes (kuard y kuardgreen), ambos escuchando en el puerto 8080. Será para implementar nuestro balanceador de carga.
+
+Ahora vemos la lista de servicios creados en los clúster de Kubernetes, sus direcciones IP y los puertos de acceso que exponen los recursos dentro del clúster.
+![image](https://github.com/user-attachments/assets/763face4-4e75-4aaa-a3c0-c70bb93b910b)
 
 Desde el navegador web:
 - Acceder a http://kuard para verificar que responde el servicio kuard.
 - Acceder a http://kuardgreen para verificar que responde el servicio kuardgreen.
 Refrescar la página varias veces y observar cómo las respuestas provienen de diferentes pods, lo que indica que el balanceo de carga funciona.
-(Fotos del balanceo) 
+
+-La practica se realizó hasta este punto. Pues, no recibíamos respuesta cuanto haciamos peticiones a traves de las direcciones y puertos que exponiann los servicios Kuard y Kuardgreen. Estabamos buscando la razon de la falla y la solución . 
