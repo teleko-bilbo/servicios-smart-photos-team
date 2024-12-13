@@ -57,6 +57,7 @@ spec:                # Especificaciones del servicio
     app: kuard       # Etiqueta para seleccionar los pods
   type: LoadBalancer    # Tipo de servicio
 ```
+
 Aplicamos los cambios:
 ```bash
 kubectl apply -f service.yaml
@@ -81,30 +82,76 @@ curl http://<EXTERNAL-IP>:8080
 Si accedemos repetidamente, veremos que cambia la direccion IP del equipo que sirve contenido, siendo una de las 3 IPs que tiene cada uno de los PODs desplegados.
 
 # 2.Ingress
---- (Completar)
-Con el el controlador ingress-nginx desplegado, verificar que el controlador está corriendo y las etiquetas:
+
+Utilizaremos Ingress para conseguir realizar un balanceo a nivel HTTP (L7). Para eso, aplicamos los siguiente ficheros ".yaml", los cuales especifican 
+
+```bash
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: virtualhost
+spec:
+  rules:
+  - host: kuard
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kuard
+            port:
+              number: 8080
+
+  - host: "kuardgreen"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kuardgreen
+            port:
+              number: 8080
+```
+
+Con el controlador ingress-nginx desplegado, verificamos que el controlador está corriendo y las etiquetas. Tambien vemos que se trata de un daemonset (no es un servicio como el balanceador de carga usado antes):
+
 ```bash
 kubectl get pods -n ingress-nginx --show labels
 ```
---- (Completar)
 
-Verificar la IP externa para compruebar que se asigna una IP al servicio ingress-nginx (Tomar nota de la IP externa para usarla más adelante):
+![Foto5](imgs/5.png)
+
+
+Verificar la IP externa para comprobar que se asigna una IP al servicio ingress-nginx (Tomar nota de la IP externa para usarla más adelante):
+
 ```bash
 kubectl get svc -n ingress-nginx # 192.168.1.196
 ```
-Crear dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
-Deployment y servicio del primer servicio (kuard)
-Deployment y servicio del primer servicio (kuardgreen)
 
-Editar el archivo /etc/hosts del cliente para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Por ejemplo:
+Ahora, creamos dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
+1º Deployment y servicio del apartado anterior (kuard)
+2º Deployment y servicio del primer servicio (kuardgreen)
+
+El resultado de desplegar tanto ambos servicios como Ingress:
+
+![Foto7](imgs/7.png)
+![Foto8](imgs/8.png)
+
+Editamos el archivo /etc/hosts del cliente para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Para ello:
+
 ```bash
 sudo nano /etc/hosts
 ```
-Agregar estas líneas (external-ip-of-ingress-nginx = 192.168.1.196): 
+
+Agregamos estas líneas al final del fichero: 
+
 ```bash
-<external-ip-of-ingress-nginx> kuard
-<external-ip-of-ingress-nginx> kuardgreen
+192.168.1.196 kuard
+192.168.1.196 kuardgreen
 ```
+
 Crear un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
 ```bash
 apiVersion: networking.k8s.io/v1
