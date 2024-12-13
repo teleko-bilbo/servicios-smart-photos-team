@@ -193,6 +193,7 @@ El pathType está configurado como Prefix, lo que significa que se aplicará a t
 Esta declarativa indica cómo enrutar tráfico HTTP de dos hosts (kuard y kuardgreen) hacia los servicios correspondientes (kuard y kuardgreen), ambos escuchando en el puerto 8080. Será para implementar nuestro balanceador de carga.
 
 Ahora vemos la lista de servicios creados en los clúster de Kubernetes, sus direcciones IP y los puertos de acceso que exponen los recursos dentro del clúster.
+
 ![image](https://github.com/user-attachments/assets/763face4-4e75-4aaa-a3c0-c70bb93b910b)
 
 Desde el navegador web:
