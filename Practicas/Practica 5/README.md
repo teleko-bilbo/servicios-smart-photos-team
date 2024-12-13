@@ -81,65 +81,51 @@ curl http://<EXTERNAL-IP>:8080
 
 Si accedemos repetidamente, veremos que cambia la direccion IP del equipo que sirve contenido, siendo una de las 3 IPs que tiene cada uno de los PODs desplegados.
 
+
 # 2.Ingress
 
-Utilizaremos Ingress para conseguir realizar un balanceo a nivel HTTP (L7). Para eso, aplicamos los siguiente ficheros ".yaml", los cuales especifican 
+Utilizaremos Ingress para conseguir realizar un balanceo a nivel HTTP (L7). Para eso, debemos primero exponer el servicio de Ingress. Consultamos las etiquetas de los pods de Ingress mediante cualquiera de los siguientes comandos:
 
 ```bash
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: virtualhost
-spec:
-  rules:
-  - host: kuard
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kuard
-            port:
-              number: 8080
-
-  - host: "kuardgreen"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kuardgreen
-            port:
-              number: 8080
-```
-
-Con el controlador ingress-nginx desplegado, verificamos que el controlador está corriendo y las etiquetas. Tambien vemos que se trata de un daemonset (no es un servicio como el balanceador de carga usado antes):
-
-```bash
-kubectl get pods -n ingress-nginx --show labels
+kubectl get pods -n ingress-nginx-kubernetes-worker --show labels
+#kubectl get all -o wide -n ingress-nginx-kubernetes-worker
 ```
 
 ![Foto5](imgs/5.png)
 
+Identificadas estas etiquetas, las incluimos en el selector, para asi indicar los pods a los que queremos que se redirija el trafico. Aplicamos el fichero serviceingress.yaml:
 
-Verificar la IP externa para comprobar que se asigna una IP al servicio ingress-nginx (Tomar nota de la IP externa para usarla más adelante):
+```bash
+apiVersion: v1       # Versión de la API
+kind: Service        # Tipo de objeto
+metadata:
+  name: ingressservice        # Nombre del servicio
+spec:
+  selector: # Especificaciones del servicio
+    app.kubernetes.io/name: ingress-nginx-kubernetes-worker
+  ports:             # Puertos del servicio
+  - port: 8080       # Puerto expuesto
+    targetPort: 8080 # Puerto al que se redirige
+    protocol: TCP    # Protocolo utilizado
+  type: LoadBalancer    # Tipo de servicio
+```
+
+Tras el despliegue, verificamos la IP externa para comprobar que se asigna una IP correcta al servicio ingress-nginx (Tomar nota de la IP externa para usarla más adelante):
 
 ```bash
 kubectl get svc -n ingress-nginx # 192.168.1.196
 ```
 
-Ahora, creamos dos despliegues y servicios. Uno puede ser similar al de la práctica anterior.
-1º Deployment y servicio del apartado anterior (kuard)
-2º Deployment y servicio del primer servicio (kuardgreen)
+Ahora, creamos dos despliegues y servicios. Uno, será el de la practica anterior, y el segundo una version similar pero con otro nombre y que parte de la imagen "green" de Kuard.
+  1º Deployment y servicio del apartado anterior (kuard)
+  2º Deployment y servicio con la image de la version green (kuardgreen)
 
 El resultado de desplegar tanto ambos servicios como Ingress:
 
 ![Foto7](imgs/7.png)
 ![Foto8](imgs/8.png)
 
-Editamos el archivo /etc/hosts del cliente para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Para ello:
+Una vez desplegado Ingress, editamos el archivo /etc/hosts para asociar la IP externa del servicio ingress-nginx a dos nombres diferentes. Para ello:
 
 ```bash
 sudo nano /etc/hosts
@@ -152,39 +138,13 @@ Agregamos estas líneas al final del fichero:
 192.168.1.196 kuardgreen
 ```
 
-Crear un archivo ingress.yaml con la configuración para dirigir las solicitudes según el host:
-```bash
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: virtualhost
-spec:
-  rules:
-  - host: "kuard"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kuard
-            port:
-              number: 8080
-  - host: "kuardgreen"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: kuardgreen
-            port:
-              number: 8080
-```
+
+
 Aplicar el manifiesto:
 ```bash
 kubectl apply -f ingress.yaml
 ```
+
 Desde el navegador web:
 - Acceder a http://kuard para verificar que responde el servicio kuard.
 - Acceder a http://kuardgreen para verificar que responde el servicio kuardgreen.
